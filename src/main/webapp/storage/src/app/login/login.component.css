@@ -1,6 +1,18 @@
-label {
+  label {
     display: block;
     margin-top: 10px;
+  }
+
+  button {
+    background-color: #6CBB3C;
+  }
+
+  h2 {
+    text-align: center;
+  }
+
+  .form-group{
+    text-align: center;
   }
   
   .card-container.card {
@@ -29,4 +41,12 @@ label {
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
     border-radius: 50%;
+  }
+
+  .col-md-12 {
+    position: relative;
+    top: 25%;
+    -webkit-transform: translateY(25%);
+    -ms-transform: translateY(25%);
+    transform: translateY(25%);
   }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserService } from '../_services/user.service';
 
 @Component({
@@ -9,7 +10,8 @@ import { UserService } from '../_services/user.service';
 export class BoardUserComponent implements OnInit {
   content?: string;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.userService.getUserBoard().subscribe(
@@ -17,7 +19,7 @@ export class BoardUserComponent implements OnInit {
         this.content = data;
       },
       err => {
-        this.content = JSON.parse(err.error).message;
+        this.router.navigate(['login']);
       }
     );
   }
