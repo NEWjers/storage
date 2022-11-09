@@ -14,14 +14,6 @@ export class BoardUserComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    this.userService.getUserBoard().subscribe(
-      data => {
-        this.content = data;
-      },
-      err => {
-        this.router.navigate(['login']);
-      }
-    );
   }
 
 }
