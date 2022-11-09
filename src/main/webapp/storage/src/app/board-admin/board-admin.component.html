@@ -1,5 +1,18 @@
-<div class="container">
-    <header class="jumbotron">
-      <p>{{ content }}</p>
-    </header>
-  </div>
+<app-header></app-header>
+<table class="table table-bordered">
+  <thead class="table-success">
+    <tr >
+      <th scope="col">Id</th>
+      <th scope="col">Username</th>
+      <th scope="col">Roles</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <th scope="row">{{ user.id }}</th>
+      <td>{{ user.username }}</td>
+      <td>{{ user.role }}</td>
+    </tr>
+  </tbody>
+</table>
+

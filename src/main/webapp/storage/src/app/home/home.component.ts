@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../dto/User';
 import { UserService } from '../_services/user.service';
 
 @Component({
@@ -7,17 +8,14 @@ import { UserService } from '../_services/user.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  content?: string;
+  users?: User[];
 
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
-    this.userService.getPublicContent().subscribe(
+    this.userService.getAllUsers().subscribe(
       data => {
-        this.content = data;
-      },
-      err => {
-        this.content = JSON.parse(err.error).message;
+        this.users = data;
       }
     );
   }
