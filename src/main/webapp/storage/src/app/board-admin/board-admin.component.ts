@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../dto/User';
 import { UserService } from '../_services/user.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AddUserComponent } from '../add-user/add-user.component';
 
 @Component({
   selector: 'app-board-admin',
@@ -10,7 +12,10 @@ import { UserService } from '../_services/user.service';
 export class BoardAdminComponent implements OnInit {
   users?: User[];
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private userService: UserService,
+    private matDialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
     this.userService.getAllUsers().subscribe(
@@ -18,6 +23,31 @@ export class BoardAdminComponent implements OnInit {
         this.users = data;
       }
     );
+  }
+
+  addUserDialog(enterAnimationDuration: string, exitAnimationDuration: string) {
+      this.matDialog.open(AddUserComponent, {
+        width: '500px',
+        enterAnimationDuration,
+        exitAnimationDuration,
+        data: {
+          type: 'create'
+        }
+      });
+  }
+
+  editUserDialog(enterAnimationDuration: string, exitAnimationDuration: string, username?: string, role?: string, id?: number) {
+    this.matDialog.open(AddUserComponent, {
+      width: '500px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: {
+        type: 'update',
+        username: username,
+        role: role,
+        id: id
+      }
+    });
   }
 
 }

@@ -5,13 +5,17 @@
       <th scope="col">Id</th>
       <th scope="col">Username</th>
       <th scope="col">Roles</th>
+      <th scope="col"><button type="button" class="btn" id="add" (click)="addUserDialog('0ms', '0ms')">+</button></th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let user of users">
-      <th scope="row">{{ user.id }}</th>
+      <td scope="row">{{ user.id }}</td>
       <td>{{ user.username }}</td>
       <td>{{ user.role }}</td>
+      <td>
+        <button type="button" class="btn btn-warning" (click)="editUserDialog('0ms', '0ms', user.username, user.role, user.id)">Edit</button>
+      </td>
     </tr>
   </tbody>
 </table>
