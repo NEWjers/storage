@@ -51,7 +51,10 @@ public class UserService {
 
         User user = userRepository.getById(updateRequest.getId());
 
-        user.setUsername(updateRequest.getUsername());
+        if (updateRequest.getUsername() != null) {
+            user.setUsername(updateRequest.getUsername());
+        }
+
         if (updateRequest.getPassword() != null) {
             user.setPassword(encoder.encode(updateRequest.getPassword()));
         }
