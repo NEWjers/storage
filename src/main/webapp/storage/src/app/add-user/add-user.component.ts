@@ -37,9 +37,9 @@ export class AddUserComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.data.type == 'create') {
-      const { username, password, role } = this.form;
+    const { username, password, role } = this.form;
 
+    if (this.data.type == 'create') {
       this.authService.register(username, password, role).subscribe(
         data => {
           this.dialogRef.close();
@@ -50,12 +50,8 @@ export class AddUserComponent implements OnInit {
         }
       );
     }
-
-    console.log(this.data.type);
     
     if (this.data.type == 'update') {
-      const { username, password, role } = this.form;
-
       this.userService.updateUser(this.data.id, username, role, password).subscribe(
         data => {
           this.dialogRef.close();

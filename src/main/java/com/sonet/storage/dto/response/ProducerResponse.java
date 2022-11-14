@@ -5,12 +5,15 @@ import lombok.Getter;
 import lombok.Setter;
 
 @AllArgsConstructor
-@Getter @Setter
-public class UserResponse {
+@Getter
+@Setter
+public class ProducerResponse {
 
     private Long id;
 
-    private String username;
+    private String name;
 
-    private String role;
+    private String country;
+
+    private String description;
 }
