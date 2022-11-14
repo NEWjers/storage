@@ -31,3 +31,11 @@ button {
 #add {
     background-color: #6CBB3C;
 }
+
+.add {
+    text-align: end;
+}
+
+.edit-delete {
+    text-align: end;
+}

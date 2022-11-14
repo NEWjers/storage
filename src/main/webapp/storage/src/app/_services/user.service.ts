@@ -28,4 +28,10 @@ export class UserService {
       password
     }, httpOptions);
   }
+
+  deleteUser(id: number): Observable<any> {
+    console.log(API_URL + '/' + id);
+    
+    return this.http.delete(API_URL + '/' + id, httpOptions);
+  }
 }

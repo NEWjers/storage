@@ -31,7 +31,7 @@ public class UserService {
     private RoleRepository roleRepository;
 
     public List<UserResponse> getAllUsers() {
-        List<User> users = userRepository.findAll();
+        List<User> users = userRepository.findByOrderByIdAsc();
 
         return users.stream().map(
                 user -> new UserResponse(
@@ -52,7 +52,9 @@ public class UserService {
         User user = userRepository.getById(updateRequest.getId());
 
         user.setUsername(updateRequest.getUsername());
-        user.setPassword(encoder.encode(updateRequest.getPassword()));
+        if (updateRequest.getPassword() != null) {
+            user.setPassword(encoder.encode(updateRequest.getPassword()));
+        }
 
         String strRole = updateRequest.getRole();
         Set<Role> roles = new HashSet<>();
@@ -76,7 +78,19 @@ public class UserService {
         user.setRoles(roles);
         userRepository.save(user);
 
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+        return ResponseEntity.ok(new MessageResponse("User created successfully!"));
+    }
+
+    public ResponseEntity<?> deleteUser(Long id) {
+        if (!userRepository.existsById(id)) {
+            return ResponseEntity
+                    .notFound()
+                    .build();
+        }
+
+        userRepository.deleteById(id);
+
+        return ResponseEntity.ok(new MessageResponse("User deleted successfully!"));
     }
 
     private String getMainRoleString(Set<Role> roles) {

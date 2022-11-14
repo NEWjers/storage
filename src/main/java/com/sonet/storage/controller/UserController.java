@@ -29,4 +29,10 @@ public class UserController {
     public ResponseEntity<?> updateUser(@RequestBody UpdateUserRequest updateRequest) {
         return userService.updateUser(updateRequest);
     }
+
+    @DeleteMapping("{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> deleteUser(@PathVariable("id") Long id) {
+        return userService.deleteUser(id);
+    }
 }

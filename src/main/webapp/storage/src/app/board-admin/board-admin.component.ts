@@ -50,4 +50,12 @@ export class BoardAdminComponent implements OnInit {
     });
   }
 
+  deleteUser(id: number) {
+    this.userService.deleteUser(id).subscribe(
+      data => {
+        window.location.reload();
+      }
+    );
+  }
+
 }

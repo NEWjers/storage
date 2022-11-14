@@ -9,13 +9,22 @@
             Username is required!
         </div>
     </div>
-    <div class="form-group">
-        <label for="password" *ngIf="this.data.type == 'create'">Password</label>
-        <label for="password" *ngIf="this.data.type == 'update'">New password</label>
+    <div class="form-group" *ngIf="this.data.type == 'create'">
+        <label for="password">Password</label>
         <input type="password" class="form-control" name="password" [(ngModel)]="form.password" required minlength="6"
             #password="ngModel" />
         <div class="alert alert-danger" role="alert" *ngIf="password.errors && f.submitted">
             <div *ngIf="password.errors?.['required']">Password is required</div>
+            <div *ngIf="password.errors?.['minlength']">
+                Password must be at least 6 characters
+            </div>
+        </div>
+    </div>
+    <div class="form-group" *ngIf="this.data.type == 'update'">
+        <label for="password">New password</label>
+        <input type="password" class="form-control" name="password" [(ngModel)]="form.password" minlength="6"
+            #password="ngModel" />
+        <div class="alert alert-danger" role="alert" *ngIf="password.errors && f.submitted">
             <div *ngIf="password.errors?.['minlength']">
                 Password must be at least 6 characters
             </div>
@@ -30,8 +39,11 @@
         </label>
     </div>
     <div class="form-group">
-        <button class="btn btn-primary btn-block">
+        <button *ngIf="this.data.type == 'create'" class="btn btn-primary btn-block">
             Create
+        </button>
+        <button *ngIf="this.data.type == 'update'" class="btn btn-primary btn-block">
+            Update
         </button>
     </div>
 </form>
