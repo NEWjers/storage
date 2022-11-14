@@ -5,10 +5,13 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Set;
 
-@Getter @Setter
-public class SignupRequest {
+@Getter
+@Setter
+public class UpdateUserRequest {
+
+    @NotBlank
+    private Long id;
 
     @NotBlank
     @Size(min = 3, max = 20)
