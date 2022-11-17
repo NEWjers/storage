@@ -29,8 +29,6 @@ export class ProducerService {
   }
 
   updateProducer(id: number, name: string, country: string, description: string): Observable<any> {
-    console.log(API_URL + "/update");
-    
     return this.http.post(API_URL + "/update", {
       id,
       name,

@@ -1,0 +1,41 @@
+table {
+    width: 75% !important;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+}
+
+table {
+    font-size: larger;
+}
+
+td{
+    vertical-align: middle
+}
+
+th{
+    vertical-align: middle;
+    background-color: #6CBB3C80;
+}
+
+img {
+    width: 10px;
+    height: 10px;
+}
+
+button {
+    margin-right: 5px;
+}
+
+#add {
+    background-color: #6CBB3C;
+}
+
+.add {
+    text-align: end;
+}
+
+.edit-delete {
+    text-align: end;
+}

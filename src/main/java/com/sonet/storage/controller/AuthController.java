@@ -1,7 +1,7 @@
 package com.sonet.storage.controller;
 
-import com.sonet.storage.dto.request.LoginRequest;
-import com.sonet.storage.dto.request.SignupRequest;
+import com.sonet.storage.dto.request.user.LoginRequest;
+import com.sonet.storage.dto.request.user.SignupRequest;
 import com.sonet.storage.dto.response.JwtResponse;
 import com.sonet.storage.dto.response.MessageResponse;
 import com.sonet.storage.model.user.ERole;

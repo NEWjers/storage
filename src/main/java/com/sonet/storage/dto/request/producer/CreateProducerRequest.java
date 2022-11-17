@@ -1,4 +1,4 @@
-package com.sonet.storage.dto.request;
+package com.sonet.storage.dto.request.producer;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,11 +8,9 @@ import javax.validation.constraints.Size;
 
 @Getter
 @Setter
-public class UpdateProducerRequest {
+public class CreateProducerRequest {
 
     @NotBlank
-    private Long id;
-
     @Size(min = 3, max = 20)
     private String name;
 

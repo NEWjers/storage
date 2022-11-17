@@ -1,6 +1,6 @@
 package com.sonet.storage.controller;
 
-import com.sonet.storage.dto.request.UpdateUserRequest;
+import com.sonet.storage.dto.request.user.UpdateUserRequest;
 import com.sonet.storage.dto.response.UserResponse;
 import com.sonet.storage.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
