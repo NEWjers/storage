@@ -1,4 +1,4 @@
-package com.sonet.storage.dto.request;
+package com.sonet.storage.dto.request.user;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AuthService } from '../_services/auth.service';
 import { ProducerService } from '../_services/producer.service';
 
 @Component({
@@ -19,7 +18,6 @@ export class AddProducerComponent implements OnInit {
   errorMessage = '';
 
   constructor(
-    private authService: AuthService,
     private dialogRef: MatDialogRef<AddProducerComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private producerService: ProducerService
@@ -51,8 +49,6 @@ export class AddProducerComponent implements OnInit {
     }
 
     if (this.data.type == 'update') {
-      console.log("update");
-
       this.producerService.updateProducer(this.data.id, name, country, description).subscribe(
         data => {
           this.dialogRef.close();
@@ -61,7 +57,7 @@ export class AddProducerComponent implements OnInit {
         err => {
           this.errorMessage = err.error.message;
         }
-      )
+      );
     }
   }
 

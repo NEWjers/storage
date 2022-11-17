@@ -1,0 +1,28 @@
+<app-header></app-header>
+<table class="table table-bordered">
+    <thead class="table-success">
+        <tr >
+            <th scope="col">Code</th>
+            <th scope="col">Size</th>
+            <th scope="col">Pack</th>
+            <th scope="col">Price</th>
+            <th scope="col">Description</th>
+            <th scope="col">Producer</th>
+            <th scope="col" class="add"><button type="button" class="btn" id="add" (click)="addItemDialog('0ms', '0ms')">+</button></th>
+          </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of items">
+            <td scope="row">{{ item.code }}</td>
+            <td>{{ item.size }}</td>
+            <td>{{ item.pack }}</td>
+            <td>{{ item.price }}</td>
+            <td>{{ item.description }}</td>
+            <td>{{ item.producer.name }}</td>
+            <td class="edit-delete">
+                <button type="button" class="btn btn-warning" (click)="editItemDialog('0ms', '0ms', item.id, item.code, item.size, item.pack, item.price, item.description, item.producer)">Edit</button>
+                <button type="button" class="btn btn-danger" (click)="deleteItem(item.id)">Delete</button>
+            </td>
+        </tr>
+    </tbody>
+</table>

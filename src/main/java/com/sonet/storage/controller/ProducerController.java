@@ -1,7 +1,7 @@
 package com.sonet.storage.controller;
 
-import com.sonet.storage.dto.request.CreateProducerRequest;
-import com.sonet.storage.dto.request.UpdateProducerRequest;
+import com.sonet.storage.dto.request.producer.CreateProducerRequest;
+import com.sonet.storage.dto.request.producer.UpdateProducerRequest;
 import com.sonet.storage.dto.response.ProducerResponse;
 import com.sonet.storage.service.ProducerService;
 import org.springframework.beans.factory.annotation.Autowired;
