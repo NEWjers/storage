@@ -20,6 +20,7 @@ import { BoardItemComponent } from './board-item/board-item.component';
 import { AddItemComponent } from './add-item/add-item.component';
 import { NgMaterialModule } from './ng-material/ng-material.module';
 import { MatFormField } from '@angular/material/form-field';
+import { BoardRecordComponent } from './board-record/board-record.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { MatFormField } from '@angular/material/form-field';
     BoardProducerComponent,
     AddProducerComponent,
     BoardItemComponent,
-    AddItemComponent
+    AddItemComponent,
+    BoardRecordComponent
   ],
   imports: [
     BrowserModule,

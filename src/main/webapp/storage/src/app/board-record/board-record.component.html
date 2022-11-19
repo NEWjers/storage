@@ -1,0 +1,27 @@
+<app-header></app-header>
+<table class="table table-bordered">
+  <thead class="table-success">
+  <tr>
+    <th scope="col">Id</th>
+    <th scope="col">Code</th>
+    <th scope="col">Size</th>
+    <th scope="col">Pack</th>
+    <th scope="col">Price</th>
+    <th scope="col">Description</th>
+    <th scope="col">Producer</th>
+    <th scope="col">Count</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let record of records">
+    <td>{{ record.id }}</td>
+    <td>{{ record.item.code }}</td>
+    <td>{{ record.item.size }}</td>
+    <td>{{ record.item.pack }}</td>
+    <td>{{ record.item.price }}</td>
+    <td>{{ record.item.description }}</td>
+    <td>{{ record.item.producer.name}}</td>
+    <td>{{ record.count}}</td>
+  </tr>
+  </tbody>
+</table>
