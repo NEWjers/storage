@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { AddItemComponent } from '../add-item/add-item.component';
-import { Item } from '../dto/Item'
-import { Producer } from '../dto/Producer';
-import { ItemService } from '../_services/item.service';
+import {Component, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {AddItemComponent} from '../add-item/add-item.component';
+import {Item} from '../dto/Item'
+import {Producer} from '../dto/Producer';
+import {ItemService} from '../_services/item.service';
 
 @Component({
   selector: 'app-board-item',
@@ -17,7 +17,8 @@ export class BoardItemComponent implements OnInit {
   constructor(
     private matDialog: MatDialog,
     private itemService: ItemService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.itemService.getAllItems().subscribe(
