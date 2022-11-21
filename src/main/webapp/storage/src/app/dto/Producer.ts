@@ -1,14 +1,31 @@
 export class Producer {
-    id: number;
-    name: string;
-    country: string;
-    description: string;
+    private readonly _id: number;
+    private readonly _name: string;
+    private readonly _country: string;
+    private readonly _description: string;
 
 
   constructor(id: number, name: string, country: string, description: string) {
-    this.id = id;
-    this.name = name;
-    this.country = country;
-    this.description = description;
+    this._id = id;
+    this._name = name;
+    this._country = country;
+    this._description = description;
+  }
+
+
+  get id(): number {
+    return this._id;
+  }
+
+  get name(): string {
+    return this._name;
+  }
+
+  get country(): string {
+    return this._country;
+  }
+
+  get description(): string {
+    return this._description;
   }
 }
