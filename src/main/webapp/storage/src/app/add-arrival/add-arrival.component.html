@@ -16,7 +16,7 @@
 </div>
 
 <div id="scroll">
-  <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+  <div>
     <table class="table table-bordered">
       <tr *ngIf="selectedItems.length != 0">
         <th scope="col">Code</th>
@@ -27,21 +27,21 @@
         <th scope="col">Producer</th>
         <th scope="col">Count</th>
       </tr>
-      <tr *ngFor="let selectedItem of selectedItems">
-        <td>{{ selectedItem.code }}</td>
-        <td>{{ selectedItem.size }}</td>
-        <td>{{ selectedItem.pack }}</td>
-        <td>{{ selectedItem.price }}</td>
-        <td>{{ selectedItem.description }}</td>
-        <td>{{ selectedItem.producer.name }}</td>
-        <td><input type="text" class="form-control"></td>
+      <tr *ngFor="let selectedItem of selectedItems;let index = index;trackBy:trackByIndex;">
+        <td>{{ selectedItem.item.code }}</td>
+        <td>{{ selectedItem.item.size }}</td>
+        <td>{{ selectedItem.item.pack }}</td>
+        <td>{{ selectedItem.item.price }}</td>
+        <td>{{ selectedItem.item.description }}</td>
+        <td>{{ selectedItem.item.producer.name }}</td>
+        <td><input type="text" class="form-control" [(ngModel)]="selectedItems[index].itemCount"></td>
       </tr>
     </table>
     <div class="form-group">
-      <button class="btn btn-primary btn-block" *ngIf="selectedItems.length != 0">
+      <button class="btn btn-primary btn-block" *ngIf="selectedItems.length != 0" (click)="onSubmit()">
         Create
       </button>
     </div>
-  </form>
+  </div>
 </div>
 

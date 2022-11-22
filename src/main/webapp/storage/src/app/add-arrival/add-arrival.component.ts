@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {Item} from "../dto/Item";
 import {ItemService} from "../_services/item.service";
-import {HtmlTagDefinition} from "@angular/compiler";
+import {ArrivalRequest} from "../dto/ArrivalRequest";
+import {ArrivalService} from "../_services/arrival.service";
+import {MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-add-arrival',
@@ -12,11 +14,17 @@ export class AddArrivalComponent implements OnInit {
 
   items: Item[] = [];
 
-  selectedItems: Item[] = [];
+  selectedItems: ArrivalRequest[] = [];
 
   searchText = '';
 
-  constructor(private itemService: ItemService) { }
+  form: any;
+
+  constructor(
+    private itemService: ItemService,
+    private arrivalService: ArrivalService,
+    private dialogRef: MatDialogRef<AddArrivalComponent>
+  ) { }
 
   ngOnInit(): void {
     this.itemService.getAllItems().subscribe(
@@ -26,11 +34,22 @@ export class AddArrivalComponent implements OnInit {
     )
   }
 
-  onSubmit() {}
+  onSubmit() {
+    this.arrivalService.createArrival(this.selectedItems).subscribe(
+      data => {
+        this.dialogRef.close();
+        window.location.reload();
+      }
+    );
+  }
 
   addItem(item: Item) {
-    this.selectedItems.push(item);
+    this.selectedItems.push(new ArrivalRequest('', item));
     (document.getElementById('search-text') as HTMLInputElement).focus();
+  }
+
+  trackByIndex(index: number, obj: any): any {
+    return index;
   }
 
 }
