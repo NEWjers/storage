@@ -1,0 +1,17 @@
+<app-header></app-header>
+<table class="table table-bordered">
+  <thead class="table-success">
+  <tr>
+    <th scope="col">Arrival</th>
+    <th scope="col">Date</th>
+    <th scope="col" class="add"><button type="button" class="btn" id="add" (click)="addArrivalDialog('0ms', '0ms')">+</button></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let arrival of arrivals">
+    <td><a class="link-dark" (click)="viewArrivalDialog('0ms', '0ms', arrival)">Arrival #{{ arrival.id }}</a></td>
+    <td><a class="link-dark" (click)="viewArrivalDialog('0ms', '0ms', arrival)">{{ arrival.date }}</a></td>
+    <td></td>
+  </tr>
+  </tbody>
+</table>

@@ -19,8 +19,12 @@ import { AddProducerComponent } from './add-producer/add-producer.component';
 import { BoardItemComponent } from './board-item/board-item.component';
 import { AddItemComponent } from './add-item/add-item.component';
 import { NgMaterialModule } from './ng-material/ng-material.module';
-import { MatFormField } from '@angular/material/form-field';
 import { BoardRecordComponent } from './board-record/board-record.component';
+import { BoardArrivalComponent } from './board-arrival/board-arrival.component';
+import { AddArrivalComponent } from './add-arrival/add-arrival.component';
+import { FilterPipe } from './pipes/filter.pipe';
+import { HighlightDirective } from "./directives/highlight.directive";
+import { ViewArrivalComponent } from './view-arrival/view-arrival.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +38,12 @@ import { BoardRecordComponent } from './board-record/board-record.component';
     AddProducerComponent,
     BoardItemComponent,
     AddItemComponent,
-    BoardRecordComponent
+    BoardRecordComponent,
+    BoardArrivalComponent,
+    AddArrivalComponent,
+    FilterPipe,
+    HighlightDirective,
+    ViewArrivalComponent
   ],
   imports: [
     BrowserModule,

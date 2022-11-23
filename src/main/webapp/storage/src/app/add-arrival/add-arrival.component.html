@@ -1,0 +1,48 @@
+<button class="close" mat-button (click)="close()">X</button>
+<h2>Arrival</h2>
+<div class="content" role="main">
+  <div class="card">
+    <div class="form-group">
+      <input type="text" class="form-control" id="search-text" placeholder="Enter item code"
+             aria-describedby="search-text"
+             [(ngModel)]="searchText">
+    </div>
+    <ul class="list-group list-group-flush" *ngIf="searchText">
+        <li class="list-group-item" *ngFor="let item of items | filter: searchText"
+            highlight [searchedWord]="searchText" [content]="item.code"
+            [classToApply]="'font-weight-bold'" [setTitle]="true" (click)="addItem(item)" id="search">
+        </li>
+    </ul>
+  </div>
+</div>
+
+<div id="scroll">
+  <div>
+    <table class="table table-bordered">
+      <tr *ngIf="selectedItems.length != 0">
+        <th scope="col">Code</th>
+        <th scope="col">Size</th>
+        <th scope="col">Pack</th>
+        <th scope="col">Price</th>
+        <th scope="col">Description</th>
+        <th scope="col">Producer</th>
+        <th scope="col">Count</th>
+      </tr>
+      <tr *ngFor="let selectedItem of selectedItems;let index = index;trackBy:trackByIndex;">
+        <td>{{ selectedItem.item.code }}</td>
+        <td>{{ selectedItem.item.size }}</td>
+        <td>{{ selectedItem.item.pack }}</td>
+        <td>{{ selectedItem.item.price }}</td>
+        <td>{{ selectedItem.item.description }}</td>
+        <td>{{ selectedItem.item.producer.name }}</td>
+        <td><input type="text" class="form-control" [(ngModel)]="selectedItems[index].itemCount"></td>
+      </tr>
+    </table>
+    <div class="form-group">
+      <button class="btn btn-primary btn-block" *ngIf="selectedItems.length != 0" (click)="onSubmit()">
+        Create
+      </button>
+    </div>
+  </div>
+</div>
+
