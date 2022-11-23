@@ -50,7 +50,7 @@ export class AddUserComponent implements OnInit {
         }
       );
     }
-    
+
     if (this.data.type == 'update') {
       this.userService.updateUser(this.data.id, username, role, password).subscribe(
         data => {

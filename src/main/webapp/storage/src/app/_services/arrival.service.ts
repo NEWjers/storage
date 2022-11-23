@@ -5,10 +5,6 @@ import {ArrivalRequest} from "../dto/ArrivalRequest";
 
 const API_URL = 'http://localhost:8080/api/arrivals';
 
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
-
 @Injectable({
   providedIn: 'root'
 })

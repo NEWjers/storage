@@ -3,6 +3,7 @@ import {Arrival} from "../dto/Arrival";
 import {MatDialog} from "@angular/material/dialog";
 import {ArrivalService} from "../_services/arrival.service";
 import {AddArrivalComponent} from "../add-arrival/add-arrival.component";
+import {ViewArrivalComponent} from "../view-arrival/view-arrival.component";
 
 @Component({
   selector: 'app-board-arrival',
@@ -31,6 +32,17 @@ export class BoardArrivalComponent implements OnInit {
       width: '75%',
       enterAnimationDuration,
       exitAnimationDuration
+    });
+  }
+
+  viewArrivalDialog(enterAnimationDuration: string, exitAnimationDuration: string, arrival: Arrival) {
+    this.matDialog.open(ViewArrivalComponent, {
+      width: '75%',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: {
+        arrival: arrival
+      }
     });
   }
 

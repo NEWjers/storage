@@ -9,8 +9,9 @@
   </thead>
   <tbody>
   <tr *ngFor="let arrival of arrivals">
-    <td>Arrival #{{ arrival.id }}</td>
-    <td>{{ arrival.date }}</td>
+    <td><a class="link-dark" (click)="viewArrivalDialog('0ms', '0ms', arrival)">Arrival #{{ arrival.id }}</a></td>
+    <td><a class="link-dark" (click)="viewArrivalDialog('0ms', '0ms', arrival)">{{ arrival.date }}</a></td>
+    <td></td>
   </tr>
   </tbody>
 </table>

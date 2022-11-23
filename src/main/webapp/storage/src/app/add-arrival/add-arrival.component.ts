@@ -52,4 +52,8 @@ export class AddArrivalComponent implements OnInit {
     return index;
   }
 
+  close() {
+    this.dialogRef.close();
+  }
+
 }

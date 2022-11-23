@@ -54,7 +54,7 @@ export class AddItemComponent implements OnInit {
 
     const {code, size, pack, price, description, producerId} = this.form;
     console.log(description);
-    
+
 
     if (this.data.type == 'create') {
       this.itemService.createItem(code, size, pack, price, description, producerId).subscribe(
