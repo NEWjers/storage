@@ -1,0 +1,38 @@
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+button {
+  background-color: #6CBB3C;
+  display: inline-block;
+  align-self: flex-end;
+}
+
+h2 {
+  text-align: center;
+}
+
+.form-group{
+  text-align: center;
+}
+
+th{
+  background-color: #6CBB3C80;
+}
+
+#scroll {
+  overflow:hidden;
+  overflow-y: scroll;
+  max-height: 500px;
+}
+
+.list-group {
+  z-index:100;
+  position: fixed;
+  width: 1030px;
+  margin-top: 35px;
+}
+
+
+

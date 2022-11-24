@@ -1,0 +1,26 @@
+<button class="close" mat-button (click)="close()">X</button>
+<h2>{{ data.sell.date}}</h2>
+<table class="table table-bordered">
+  <thead class="table-success">
+  <tr >
+    <th scope="col">Code</th>
+    <th scope="col">Size</th>
+    <th scope="col">Pack</th>
+    <th scope="col">Price</th>
+    <th scope="col">Description</th>
+    <th scope="col">Producer</th>
+    <th scope="col">Count</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let movingRecord of data.sell.items">
+    <td>{{ movingRecord.item.code }}</td>
+    <td>{{ movingRecord.item.size }}</td>
+    <td>{{ movingRecord.item.pack }}</td>
+    <td>{{ movingRecord.item.price }}</td>
+    <td>{{ movingRecord.item.description }}</td>
+    <td>{{ movingRecord.item.producer.name }}</td>
+    <td>-{{ movingRecord.count }}</td>
+  </tr>
+  </tbody>
+</table>

@@ -1,15 +1,15 @@
 package com.sonet.storage.service;
 
-import com.sonet.storage.dto.request.arrival.ArrivalRequest;
-import com.sonet.storage.dto.response.ArrivalResponse;
+import com.sonet.storage.dto.request.sell.SellRequest;
 import com.sonet.storage.dto.response.MessageResponse;
 import com.sonet.storage.dto.response.MovingRecordResponse;
-import com.sonet.storage.model.arrival.Arrival;
+import com.sonet.storage.dto.response.SellResponse;
 import com.sonet.storage.model.item.Item;
 import com.sonet.storage.model.moving.EMovingType;
 import com.sonet.storage.model.moving.MovingRecord;
 import com.sonet.storage.model.moving.MovingType;
 import com.sonet.storage.model.record.Record;
+import com.sonet.storage.model.sell.Sell;
 import com.sonet.storage.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,10 +22,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ArrivalService {
+public class SellService {
 
     @Autowired
-    private ArrivalRepository arrivalRepository;
+    private SellRepository sellRepository;
 
     @Autowired
     private ItemRepository itemRepository;
@@ -39,13 +39,12 @@ public class ArrivalService {
     @Autowired
     private MovingRecordRepository movingRecordRepository;
 
-    public List<ArrivalResponse> getAllArrivals() {
-
-        return arrivalRepository.findByOrderByIdAsc().stream().map(
-                arrival -> new ArrivalResponse(
-                        arrival.getId(),
-                        arrival.getDate(),
-                        arrival.getItems().stream().map(
+    public List<SellResponse> getAllSells() {
+        return sellRepository.findByOrderByIdAsc().stream().map(
+                sell -> new SellResponse(
+                        sell.getId(),
+                        sell.getDate(),
+                        sell.getItems().stream().map(
                                 movingRecord -> new MovingRecordResponse(
                                         movingRecord.getCount(),
                                         movingRecord.getDate(),
@@ -57,22 +56,22 @@ public class ArrivalService {
         ).collect(Collectors.toList());
     }
 
-    public ResponseEntity<?> createArrival(List<ArrivalRequest> arrivals) {
-        Arrival arrival = new Arrival();
+    public ResponseEntity<?> createSell(List<SellRequest> sells) {
+        Sell sell = new Sell();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        arrival.setDate(LocalDateTime.now().format(formatter));
+        sell.setDate(LocalDateTime.now().format(formatter));
 
         List<MovingRecord> movingRecords = new ArrayList<>();
 
-        arrivals.forEach(arrivalRequest -> {
-            if (itemRepository.existsById(arrivalRequest.getItem().getId())) {
-                Item item = itemRepository.getById(arrivalRequest.getItem().getId());
+        sells.forEach(sellRequest -> {
+            if (itemRepository.existsById(sellRequest.getItem().getId())) {
+                Item item = itemRepository.getById(sellRequest.getItem().getId());
                 MovingRecord movingRecord = new MovingRecord();
                 movingRecord.setDate(LocalDateTime.now().format(formatter));
-                movingRecord.setCount(Long.parseLong(arrivalRequest.getItemCount()));
+                movingRecord.setCount(Long.parseLong(sellRequest.getItemCount()));
                 movingRecord.setItem(item);
 
-                MovingType movingType = movingTypeRepository.findByName(EMovingType.ARRIVAL).orElse(null);
+                MovingType movingType = movingTypeRepository.findByName(EMovingType.SELL).orElse(null);
                 movingRecord.setType(movingType);
 
                 movingRecords.add(movingRecord);
@@ -81,20 +80,20 @@ public class ArrivalService {
                 Record record = recordRepository.findByItem(item).orElse(null);
 
                 if (record != null) {
-                    record.setCount(record.getCount() + Long.parseLong(arrivalRequest.getItemCount()));
+                    record.setCount(record.getCount() + Long.parseLong(sellRequest.getItemCount()));
                     recordRepository.save(record);
                 } else {
                     Record newRecord = new Record();
-                    newRecord.setCount(Long.parseLong(arrivalRequest.getItemCount()));
+                    newRecord.setCount(Long.parseLong(sellRequest.getItemCount()));
                     newRecord.setItem(item);
                     recordRepository.save(newRecord);
                 }
             }
         });
 
-        arrival.setItems(movingRecords);
-        arrivalRepository.save(arrival);
+        sell.setItems(movingRecords);
+        sellRepository.save(sell);
 
-        return ResponseEntity.ok(new MessageResponse("Arrival created successfully!"));
+        return ResponseEntity.ok(new MessageResponse("Sell created successfully!"));
     }
 }
