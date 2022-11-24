@@ -8,6 +8,7 @@ import {BoardProducerComponent} from './board-producer/board-producer.component'
 import {BoardItemComponent} from './board-item/board-item.component';
 import {BoardRecordComponent} from "./board-record/board-record.component";
 import {BoardArrivalComponent} from "./board-arrival/board-arrival.component";
+import {BoardHistoryComponent} from "./board-history/board-history.component";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -17,7 +18,8 @@ const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: 'producer', component: BoardProducerComponent},
   {path: 'record', component: BoardRecordComponent},
-  {path: 'arrival', component: BoardArrivalComponent}
+  {path: 'arrival', component: BoardArrivalComponent},
+  {path: 'history', component: BoardHistoryComponent}
 ];
 
 @NgModule({

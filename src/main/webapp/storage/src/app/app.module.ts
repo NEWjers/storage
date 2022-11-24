@@ -25,6 +25,7 @@ import { AddArrivalComponent } from './add-arrival/add-arrival.component';
 import { FilterPipe } from './pipes/filter.pipe';
 import { HighlightDirective } from "./directives/highlight.directive";
 import { ViewArrivalComponent } from './view-arrival/view-arrival.component';
+import { BoardHistoryComponent } from './board-history/board-history.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { ViewArrivalComponent } from './view-arrival/view-arrival.component';
     AddArrivalComponent,
     FilterPipe,
     HighlightDirective,
-    ViewArrivalComponent
+    ViewArrivalComponent,
+    BoardHistoryComponent
   ],
   imports: [
     BrowserModule,
