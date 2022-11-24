@@ -25,6 +25,9 @@ import { AddArrivalComponent } from './add-arrival/add-arrival.component';
 import { FilterPipe } from './pipes/filter.pipe';
 import { HighlightDirective } from "./directives/highlight.directive";
 import { ViewArrivalComponent } from './view-arrival/view-arrival.component';
+import { BoardSellComponent } from './board-sell/board-sell.component';
+import { AddSellComponent } from './add-sell/add-sell.component';
+import { ViewSellComponent } from './view-sell/view-sell.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +46,10 @@ import { ViewArrivalComponent } from './view-arrival/view-arrival.component';
     AddArrivalComponent,
     FilterPipe,
     HighlightDirective,
-    ViewArrivalComponent
+    ViewArrivalComponent,
+    BoardSellComponent,
+    AddSellComponent,
+    ViewSellComponent
   ],
   imports: [
     BrowserModule,
