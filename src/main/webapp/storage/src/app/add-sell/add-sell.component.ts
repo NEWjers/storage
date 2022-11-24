@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import {Item} from "../dto/Item";
-import {ItemService} from "../_services/item.service";
 import {ArrivalRequest} from "../dto/ArrivalRequest";
-import {ArrivalService} from "../_services/arrival.service";
+import {ItemService} from "../_services/item.service";
+import {SellService} from "../_services/sell.service";
 import {MatDialogRef} from "@angular/material/dialog";
 
 @Component({
-  selector: 'app-add-arrival',
-  templateUrl: './add-arrival.component.html',
-  styleUrls: ['./add-arrival.component.css']
+  selector: 'app-add-sell',
+  templateUrl: './add-sell.component.html',
+  styleUrls: ['./add-sell.component.css']
 })
-export class AddArrivalComponent implements OnInit {
+export class AddSellComponent implements OnInit {
 
   items: Item[] = [];
 
@@ -20,8 +20,8 @@ export class AddArrivalComponent implements OnInit {
 
   constructor(
     private itemService: ItemService,
-    private arrivalService: ArrivalService,
-    private dialogRef: MatDialogRef<AddArrivalComponent>
+    private sellService: SellService,
+    private dialogRef: MatDialogRef<AddSellComponent>
   ) { }
 
   ngOnInit(): void {
@@ -29,11 +29,11 @@ export class AddArrivalComponent implements OnInit {
       data => {
         this.items = data;
       }
-    )
+    );
   }
 
   onSubmit() {
-    this.arrivalService.createArrival(this.selectedItems).subscribe(
+    this.sellService.createSell(this.selectedItems).subscribe(
       data => {
         this.dialogRef.close();
         window.location.reload();
