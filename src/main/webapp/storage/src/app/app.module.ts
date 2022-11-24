@@ -28,6 +28,7 @@ import { ViewArrivalComponent } from './view-arrival/view-arrival.component';
 import { BoardSellComponent } from './board-sell/board-sell.component';
 import { AddSellComponent } from './add-sell/add-sell.component';
 import { ViewSellComponent } from './view-sell/view-sell.component';
+import { BoardHistoryComponent } from './board-history/board-history.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { ViewSellComponent } from './view-sell/view-sell.component';
     ViewArrivalComponent,
     BoardSellComponent,
     AddSellComponent,
-    ViewSellComponent
+    ViewSellComponent,
+    BoardHistoryComponent
   ],
   imports: [
     BrowserModule,

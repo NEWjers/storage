@@ -9,6 +9,7 @@ import {BoardItemComponent} from './board-item/board-item.component';
 import {BoardRecordComponent} from "./board-record/board-record.component";
 import {BoardArrivalComponent} from "./board-arrival/board-arrival.component";
 import {BoardSellComponent} from "./board-sell/board-sell.component";
+import {BoardHistoryComponent} from "./board-history/board-history.component";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -19,7 +20,8 @@ const routes: Routes = [
   {path: 'producer', component: BoardProducerComponent},
   {path: 'record', component: BoardRecordComponent},
   {path: 'arrival', component: BoardArrivalComponent},
-  {path: 'sell', component: BoardSellComponent}
+  {path: 'sell', component: BoardSellComponent},
+  {path: 'history', component: BoardHistoryComponent}
 ];
 
 @NgModule({

@@ -1,8 +1,9 @@
-<button class="close" mat-button (click)="close()">X</button>
-<h2>{{ data.arrival.date}}</h2>
+<app-header></app-header>
 <table class="table table-bordered">
   <thead class="table-success">
   <tr >
+    <th scope="col">Date</th>
+    <th scope="col">Moving type</th>
     <th scope="col">Code</th>
     <th scope="col">Size</th>
     <th scope="col">Pack</th>
@@ -13,14 +14,17 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let movingRecord of data.arrival.items">
+  <tr *ngFor="let movingRecord of movingRecords">
+    <td>{{ movingRecord.date }}</td>
+    <td>{{ movingRecord.type }}</td>
     <td>{{ movingRecord.item.code }}</td>
     <td>{{ movingRecord.item.size }}</td>
     <td>{{ movingRecord.item.pack }}</td>
     <td>{{ movingRecord.item.price }}$</td>
     <td>{{ movingRecord.item.description }}</td>
     <td>{{ movingRecord.item.producer.name }}</td>
-    <td>+{{ movingRecord.count }}</td>
+    <td *ngIf="movingRecord.type == 'ARRIVAL'">+{{ movingRecord.count }}</td>
+    <td *ngIf="movingRecord.type == 'SELL'">-{{ movingRecord.count }}</td>
   </tr>
   </tbody>
 </table>
