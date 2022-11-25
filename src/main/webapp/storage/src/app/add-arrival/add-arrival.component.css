@@ -5,8 +5,14 @@ label {
 
 button {
   background-color: #6CBB3C;
+  border-color: #6CBB3C;
   display: inline-block;
   align-self: flex-end;
+}
+
+button:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+  background-color: #a6d988;
+  border-color: #a6d988;
 }
 
 h2 {
@@ -32,6 +38,11 @@ th{
   position: fixed;
   width: 1030px;
   margin-top: 35px;
+}
+
+.close {
+  width: 30px;
+  height: 30px;
 }
 
 

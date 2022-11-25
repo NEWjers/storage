@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddProducerComponent } from '../add-producer/add-producer.component';
 import { Producer } from '../dto/Producer';
 import { ProducerService } from '../_services/producer.service';
+import {TokenStorageService} from "../_services/token-storage.service";
 
 @Component({
   selector: 'app-board-producer',
@@ -13,9 +14,12 @@ export class BoardProducerComponent implements OnInit {
 
   producers?: Producer[];
 
+  isAdmin: boolean = false;
+
   constructor(
     private matDialog: MatDialog,
-    private producerService: ProducerService
+    private producerService: ProducerService,
+    private tokenStorageService: TokenStorageService
   ) { }
 
   ngOnInit(): void {
@@ -23,7 +27,11 @@ export class BoardProducerComponent implements OnInit {
         data => {
           this.producers = data;
         }
-      )
+      );
+
+    const user = this.tokenStorageService.getUser();
+    const roles = user.roles;
+    this.isAdmin = roles.includes('ROLE_ADMIN')
   }
 
   addProducerDialog(enterAnimationDuration: string, exitAnimationDuration: string) {

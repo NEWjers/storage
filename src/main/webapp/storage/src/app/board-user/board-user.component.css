@@ -1,0 +1,29 @@
+button:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+  background-color: #a6d988;
+  border-color: #a6d988;
+}
+
+button {
+  background-color: #6CBB3C;
+  border-color: #6CBB3C;
+  width: 200px;
+  height: 200px;
+}
+
+h1 {
+  font-size: xxx-large;
+}
+
+#sell {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 60%;
+}
+
+#receive {
+  position: absolute;
+  top: 49%;
+  transform: translateY(-50%);
+  right: 30%;
+}

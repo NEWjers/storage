@@ -4,6 +4,7 @@ import {AddItemComponent} from '../add-item/add-item.component';
 import {Item} from '../dto/Item'
 import {Producer} from '../dto/Producer';
 import {ItemService} from '../_services/item.service';
+import {TokenStorageService} from "../_services/token-storage.service";
 
 @Component({
   selector: 'app-board-item',
@@ -14,9 +15,12 @@ export class BoardItemComponent implements OnInit {
 
   items?: Item[];
 
+  isAdmin: boolean = false;
+
   constructor(
     private matDialog: MatDialog,
-    private itemService: ItemService
+    private itemService: ItemService,
+    private tokenStorageService: TokenStorageService
   ) {
   }
 
@@ -26,6 +30,10 @@ export class BoardItemComponent implements OnInit {
         this.items = data;
       }
     );
+
+    const user = this.tokenStorageService.getUser();
+    const roles = user.roles;
+    this.isAdmin = roles.includes('ROLE_ADMIN')
   }
 
   addItemDialog(enterAnimationDuration: string, exitAnimationDuration: string) {
