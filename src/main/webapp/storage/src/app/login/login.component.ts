@@ -27,10 +27,6 @@ export class LoginComponent implements OnInit {
       this.isLoggedIn = true;
       this.roles = this.tokenStorage.getUser().roles;
     }
-
-    if (this.isLoggedIn == true) {
-      this.router.navigate(['home']);
-    }
   }
 
   onSubmit(): void {
@@ -44,7 +40,12 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.roles = this.tokenStorage.getUser().roles;
-        this.router.navigate(['admin']);
+        if (this.roles.includes('ROLE_ADMIN')) {
+          this.router.navigate(['admin']);
+        } else {
+          this.router.navigate(['user']);
+        }
+
       },
       err => {
         this.errorMessage = err.error.message;

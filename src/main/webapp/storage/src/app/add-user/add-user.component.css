@@ -3,9 +3,15 @@ label {
     margin-top: 10px;
   }
 
-  button {
-    background-color: #6CBB3C;
-  }
+button:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+  background-color: #a6d988;
+  border-color: #a6d988;
+}
+
+button {
+  background-color: #6CBB3C;
+  border-color: #6CBB3C;
+}
 
   h2 {
     text-align: center;

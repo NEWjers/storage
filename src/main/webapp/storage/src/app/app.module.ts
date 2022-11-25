@@ -29,6 +29,7 @@ import { BoardSellComponent } from './board-sell/board-sell.component';
 import { AddSellComponent } from './add-sell/add-sell.component';
 import { ViewSellComponent } from './view-sell/view-sell.component';
 import { BoardHistoryComponent } from './board-history/board-history.component';
+import { BoardUserComponent } from './board-user/board-user.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { BoardHistoryComponent } from './board-history/board-history.component';
     BoardSellComponent,
     AddSellComponent,
     ViewSellComponent,
-    BoardHistoryComponent
+    BoardHistoryComponent,
+    BoardUserComponent
   ],
   imports: [
     BrowserModule,

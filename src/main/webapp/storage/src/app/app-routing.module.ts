@@ -10,18 +10,21 @@ import {BoardRecordComponent} from "./board-record/board-record.component";
 import {BoardArrivalComponent} from "./board-arrival/board-arrival.component";
 import {BoardSellComponent} from "./board-sell/board-sell.component";
 import {BoardHistoryComponent} from "./board-history/board-history.component";
+import {BoardUserComponent} from "./board-user/board-user.component";
+import {AuthGuardService} from "./_services/auth-guard.service";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'item', component: BoardItemComponent},
   {path: 'profile', component: ProfileComponent},
-  {path: 'admin', component: BoardAdminComponent},
+  {path: 'admin', component: BoardAdminComponent, canActivate: [AuthGuardService]},
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: 'producer', component: BoardProducerComponent},
   {path: 'record', component: BoardRecordComponent},
   {path: 'arrival', component: BoardArrivalComponent},
   {path: 'sell', component: BoardSellComponent},
-  {path: 'history', component: BoardHistoryComponent}
+  {path: 'history', component: BoardHistoryComponent},
+  {path: 'user', component: BoardUserComponent}
 ];
 
 @NgModule({

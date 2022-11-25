@@ -6,7 +6,7 @@
             <th scope="col">Name</th>
             <th scope="col">Country</th>
             <th scope="col">Description</th>
-            <th scope="col" class="add"><button type="button" class="btn" id="add" (click)="addProducerDialog('0ms', '0ms')">+</button></th>
+            <th scope="col" *ngIf="isAdmin" class="add"><button type="button" class="btn" id="add" (click)="addProducerDialog('0ms', '0ms')">+</button></th>
           </tr>
     </thead>
     <tbody>
@@ -15,7 +15,7 @@
             <td>{{ producer.name }}</td>
             <td>{{ producer.country }}</td>
             <td>{{ producer.description }}</td>
-            <td class="edit-delete">
+            <td class="edit-delete" *ngIf="isAdmin">
                 <button type="button" class="btn btn-warning" (click)="editProducerDialog('0ms', '0ms', producer.name, producer.country, producer.description, producer.id)">Edit</button>
                 <button type="button" class="btn btn-danger" (click)="deleteProducer(producer.id)">Delete</button>
             </td>
