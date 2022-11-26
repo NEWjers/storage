@@ -9,6 +9,9 @@ import com.sonet.storage.model.user.User;
 import com.sonet.storage.repository.RoleRepository;
 import com.sonet.storage.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,6 +35,19 @@ public class UserService {
 
     public List<UserResponse> getAllUsers() {
         List<User> users = userRepository.findByOrderByIdAsc();
+
+        return users.stream().map(
+                user -> new UserResponse(
+                        user.getId(),
+                        user.getUsername(),
+                        getMainRoleString(user.getRoles())
+                )).collect(Collectors.toList()
+        );
+    }
+
+    public List<UserResponse> getUsersPage(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<User> users = userRepository.findAll(pageable);
 
         return users.stream().map(
                 user -> new UserResponse(

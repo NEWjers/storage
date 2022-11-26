@@ -12,11 +12,20 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ItemService {
- 
+
   constructor(private http: HttpClient) { }
 
   getAllItems() {
     return this.http.get<Item[]>(API_URL);
+  }
+
+  getItemsPage(pageNumber: number, pageSize: number) {
+    const params = {page: pageNumber, size: pageSize};
+    return this.http.get<Item[]>(API_URL + '/page', {params});
+  }
+
+  getItemsSize() {
+    return this.http.get<number>(API_URL + '/size');
   }
 
   createItem(code: string, size: string, pack: number, price: number, description: string, producerId: number) {

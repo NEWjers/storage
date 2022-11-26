@@ -12,12 +12,21 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class ProducerService { 
+export class ProducerService {
 
   constructor(private http: HttpClient) { }
 
   getAllProducers() {
     return this.http.get<Producer[]>(API_URL);
+  }
+
+  getProducersPage(pageNumber: number, pageSize: number) {
+    const params = {page: pageNumber, size: pageSize};
+    return this.http.get<Producer[]>(API_URL + '/page', {params});
+  }
+
+  getProducersSize() {
+    return this.http.get<number>(API_URL + '/size');
   }
 
   createProducer(name: string, country: string, description: string) {

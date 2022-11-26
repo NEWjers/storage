@@ -7,6 +7,9 @@ import com.sonet.storage.dto.response.ProducerResponse;
 import com.sonet.storage.model.producer.Producer;
 import com.sonet.storage.repository.ProducerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +32,19 @@ public class ProducerService {
                     producer.getCountry(),
                     producer.getDescription()
         )).collect(Collectors.toList());
+    }
+
+    public List<ProducerResponse> getProducersPage(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Producer> producers = producerRepository.findAll(pageable);
+
+        return producers.stream().map(
+                producer -> new ProducerResponse(
+                        producer.getId(),
+                        producer.getName(),
+                        producer.getCountry(),
+                        producer.getDescription()
+                )).collect(Collectors.toList());
     }
 
     public ResponseEntity<?> createProducer(CreateProducerRequest createRequest) {

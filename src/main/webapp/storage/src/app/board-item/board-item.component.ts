@@ -5,6 +5,7 @@ import {Item} from '../dto/Item'
 import {Producer} from '../dto/Producer';
 import {ItemService} from '../_services/item.service';
 import {TokenStorageService} from "../_services/token-storage.service";
+import {PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-board-item',
@@ -17,6 +18,8 @@ export class BoardItemComponent implements OnInit {
 
   isAdmin: boolean = false;
 
+  totalElements: number = 0;
+
   constructor(
     private matDialog: MatDialog,
     private itemService: ItemService,
@@ -25,9 +28,15 @@ export class BoardItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.itemService.getAllItems().subscribe(
+    this.itemService.getItemsPage(0, 9).subscribe(
       data => {
         this.items = data;
+      }
+    );
+
+    this.itemService.getItemsSize().subscribe(
+      data => {
+        this.totalElements = data;
       }
     );
 
@@ -47,7 +56,7 @@ export class BoardItemComponent implements OnInit {
     });
   }
 
-  editItemDialog(enterAnimationDuration: string, exitAnimationDuration: string, id: number, code: string, size: string, pack: number, price: number, description: string, producer: Producer) {
+  editItemDialog(enterAnimationDuration: string, exitAnimationDuration: string, id: number, code: string, size: string, pack: number, price: string, description: string, producer: Producer) {
     this.matDialog.open(AddItemComponent, {
       width: '500px',
       enterAnimationDuration,
@@ -69,6 +78,14 @@ export class BoardItemComponent implements OnInit {
     this.itemService.deleteItem(id).subscribe(
       data => {
         window.location.reload();
+      }
+    );
+  }
+
+  nextPage(event: PageEvent) {
+    this.itemService.getItemsPage(event.pageIndex, event.pageSize).subscribe(
+      data => {
+        this.items = data;
       }
     );
   }

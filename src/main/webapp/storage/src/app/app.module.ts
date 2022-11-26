@@ -30,6 +30,7 @@ import { AddSellComponent } from './add-sell/add-sell.component';
 import { ViewSellComponent } from './view-sell/view-sell.component';
 import { BoardHistoryComponent } from './board-history/board-history.component';
 import { BoardUserComponent } from './board-user/board-user.component';
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 @NgModule({
   declarations: [
@@ -55,15 +56,16 @@ import { BoardUserComponent } from './board-user/board-user.component';
     BoardHistoryComponent,
     BoardUserComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatDialogModule,
-    NgMaterialModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MatDialogModule,
+        NgMaterialModule,
+        MatPaginatorModule
+    ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })

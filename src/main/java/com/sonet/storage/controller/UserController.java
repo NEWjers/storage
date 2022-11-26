@@ -24,6 +24,19 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    @GetMapping("page")
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<UserResponse> getUsersPage(@RequestParam(name = "page") int page,
+                                           @RequestParam(name = "size") int size) {
+        return userService.getUsersPage(page, size);
+    }
+
+    @GetMapping("size")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Integer getUsersNumber() {
+        return userService.getAllUsers().size();
+    }
+
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateUser(@RequestBody UpdateUserRequest updateRequest) {

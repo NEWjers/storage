@@ -22,3 +22,8 @@
         </tr>
     </tbody>
 </table>
+<mat-paginator [pageSizeOptions]="[9, 45, 90]"
+               (page)="nextPage($event)"
+               [length]="totalElements"
+               [pageSize]="9">
+</mat-paginator>

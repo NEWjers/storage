@@ -25,6 +25,19 @@ public class ItemController {
         return itemService.getAllItems();
     }
 
+    @GetMapping("page")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public List<ItemResponse> getItemsPage(@RequestParam(name = "page") int page,
+                                           @RequestParam(name = "size") int size) {
+        return itemService.getItemsPage(page, size);
+    }
+
+    @GetMapping("size")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public Integer getItemsNumber() {
+        return itemService.getAllItems().size();
+    }
+
     @PostMapping("new")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createItem(@RequestBody CreateItemRequest createItemRequest) {
