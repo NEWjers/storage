@@ -13,7 +13,7 @@
     </thead>
     <tbody>
         <tr *ngFor="let item of items">
-            <td scope="row">{{ item.code }}</td>
+            <td>{{ item.code }}</td>
             <td>{{ item.size }}</td>
             <td>{{ item.pack }}</td>
             <td>{{ item.price }}$</td>
@@ -26,3 +26,8 @@
         </tr>
     </tbody>
 </table>
+<mat-paginator [pageSizeOptions]="[9, 45, 90]"
+               (page)="nextPage($event)"
+               [length]="totalElements"
+               [pageSize]="9">
+</mat-paginator>

@@ -20,6 +20,15 @@ export class UserService {
     return this.http.get<User[]>(API_URL);
   }
 
+  getUsersPage(pageNumber: number, pageSize: number) {
+    const params = {page: pageNumber, size: pageSize};
+    return this.http.get<User[]>(API_URL + '/page', {params})
+  }
+
+  getUsersSize() {
+    return this.http.get<number>(API_URL + '/size');
+  }
+
   updateUser(id: number, username: string, role: string, password: string): Observable<any> {
     return this.http.post(API_URL, {
       id,

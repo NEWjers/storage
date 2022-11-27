@@ -12,6 +12,8 @@ import com.sonet.storage.model.record.Record;
 import com.sonet.storage.model.sell.Sell;
 import com.sonet.storage.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +58,24 @@ public class SellService {
         ).collect(Collectors.toList());
     }
 
+    public List<SellResponse> getSellsPage(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return sellRepository.findAll(pageable).stream().map(
+                sell -> new SellResponse(
+                        sell.getId(),
+                        sell.getDate(),
+                        sell.getItems().stream().map(
+                                movingRecord -> new MovingRecordResponse(
+                                        movingRecord.getCount(),
+                                        movingRecord.getDate(),
+                                        movingRecord.getType().getName().name(),
+                                        movingRecord.getItem()
+                                )
+                        ).collect(Collectors.toList())
+                )
+        ).collect(Collectors.toList());
+    }
+
     public ResponseEntity<?> createSell(List<SellRequest> sells) {
         Sell sell = new Sell();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
@@ -80,7 +100,7 @@ public class SellService {
                 Record record = recordRepository.findByItem(item).orElse(null);
 
                 if (record != null) {
-                    record.setCount(record.getCount() + Long.parseLong(sellRequest.getItemCount()));
+                    record.setCount(record.getCount() - Long.parseLong(sellRequest.getItemCount()));
                     recordRepository.save(record);
                 } else {
                     Record newRecord = new Record();

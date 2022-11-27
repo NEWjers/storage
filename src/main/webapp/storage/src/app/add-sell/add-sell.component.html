@@ -9,7 +9,7 @@
     </div>
     <ul class="list-group list-group-flush" *ngIf="searchText">
       <li class="list-group-item" *ngFor="let item of items | filter: searchText"
-          highlight [searchedWord]="searchText" [content]="item.code"
+          highlight [searchedWord]="searchText" [content]="item.code + ':' + item.size"
           [classToApply]="'font-weight-bold'" [setTitle]="true" (click)="addItem(item)" id="search">
       </li>
     </ul>

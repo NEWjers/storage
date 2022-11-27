@@ -9,6 +9,9 @@ import com.sonet.storage.model.producer.Producer;
 import com.sonet.storage.repository.ItemRepository;
 import com.sonet.storage.repository.ProducerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -41,13 +44,24 @@ public class ItemService {
         ).collect(Collectors.toList());
     }
 
-    public ResponseEntity<?> createItem(CreateItemRequest createRequest) {
-        if (itemRepository.existsByCode(createRequest.getCode())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Item with such code is already exist"));
-        }
+    public List<ItemResponse> getItemsPage(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Item> items = itemRepository.findAll(pageable);
 
+        return items.stream().map(
+                item -> new ItemResponse(
+                        item.getId(),
+                        item.getCode(),
+                        item.getSize(),
+                        item.getPack(),
+                        item.getPrice(),
+                        item.getDescription(),
+                        item.getProducer()
+                )
+        ).collect(Collectors.toList());
+    }
+
+    public ResponseEntity<?> createItem(CreateItemRequest createRequest) {
         Producer producer = producerRepository.getById(createRequest.getProducerId());
 
         Item item = new Item(

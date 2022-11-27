@@ -25,6 +25,19 @@ public class ProducerController {
         return producerService.getAllProducers();
     }
 
+    @GetMapping("page")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public List<ProducerResponse> getProducersPage(@RequestParam(name = "page") int page,
+                                                   @RequestParam(name = "size") int size) {
+        return producerService.getProducersPage(page, size);
+    }
+
+    @GetMapping("size")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public Integer getProducersNumber() {
+        return producerService.getAllProducers().size();
+    }
+
     @PostMapping("new")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createProducer(@RequestBody CreateProducerRequest createRequest) {

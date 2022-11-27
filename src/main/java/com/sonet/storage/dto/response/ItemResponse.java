@@ -18,7 +18,7 @@ public class ItemResponse {
 
     private Integer pack;
 
-    private Integer price;
+    private Double price;
 
     private String description;
 

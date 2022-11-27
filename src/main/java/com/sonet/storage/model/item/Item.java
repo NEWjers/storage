@@ -9,10 +9,7 @@ import lombok.ToString;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "item",
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = "code")
-        })
+@Table(name = "item")
 @NoArgsConstructor
 @ToString
 @Getter
@@ -29,14 +26,14 @@ public class Item {
 
     private Integer pack;
 
-    private Integer price;
+    private Double price;
 
     private String description;
 
     @ManyToOne
     private Producer producer;
 
-    public Item(String code, String size, Integer pack, Integer price, String description, Producer producer) {
+    public Item(String code, String size, Integer pack, Double price, String description, Producer producer) {
         this.code = code;
         this.size = size;
         this.pack = pack;

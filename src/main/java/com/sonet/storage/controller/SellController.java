@@ -21,13 +21,26 @@ public class SellController {
 
     @GetMapping
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public List<SellResponse> getAllItems() {
+    public List<SellResponse> getAllSells() {
         return sellService.getAllSells();
+    }
+
+    @GetMapping("page")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public List<SellResponse> getSellsPage(@RequestParam(name = "page") int page,
+                                           @RequestParam(name = "size") int size) {
+        return sellService.getSellsPage(page, size);
+    }
+
+    @GetMapping("size")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public Integer getSellsNumber() {
+        return sellService.getAllSells().size();
     }
 
     @PostMapping("new")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<?> createArrival(@RequestBody SellRequest[] sellRequests) {
+    public ResponseEntity<?> createSell(@RequestBody SellRequest[] sellRequests) {
         List<SellRequest> sellRequestList = Arrays.asList(sellRequests);
         return sellService.createSell(sellRequestList);
     }

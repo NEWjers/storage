@@ -5,12 +5,12 @@ export class Item {
     private readonly _code: string;
     private readonly _size: string;
     private readonly _pack: number;
-    private readonly _price: number;
+    private readonly _price: string;
     private readonly _description: string;
     private readonly _producer: Producer;
 
 
-  constructor(id: number, code: string, size: string, pack: number, price: number, description: string, producer: Producer) {
+  constructor(id: number, code: string, size: string, pack: number, price: string, description: string, producer: Producer) {
     this._id = id;
     this._code = code;
     this._size = size;
@@ -37,7 +37,7 @@ export class Item {
     return this._pack;
   }
 
-  get price(): number {
+  get price(): string {
     return this._price;
   }
 

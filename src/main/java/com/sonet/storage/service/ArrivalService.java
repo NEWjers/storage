@@ -12,6 +12,8 @@ import com.sonet.storage.model.moving.MovingType;
 import com.sonet.storage.model.record.Record;
 import com.sonet.storage.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +44,24 @@ public class ArrivalService {
     public List<ArrivalResponse> getAllArrivals() {
 
         return arrivalRepository.findByOrderByIdAsc().stream().map(
+                arrival -> new ArrivalResponse(
+                        arrival.getId(),
+                        arrival.getDate(),
+                        arrival.getItems().stream().map(
+                                movingRecord -> new MovingRecordResponse(
+                                        movingRecord.getCount(),
+                                        movingRecord.getDate(),
+                                        movingRecord.getType().getName().name(),
+                                        movingRecord.getItem()
+                                )
+                        ).collect(Collectors.toList())
+                )
+        ).collect(Collectors.toList());
+    }
+
+    public List<ArrivalResponse> getArrivalsPage(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return arrivalRepository.findAll(pageable).stream().map(
                 arrival -> new ArrivalResponse(
                         arrival.getId(),
                         arrival.getDate(),

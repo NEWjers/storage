@@ -21,8 +21,21 @@ public class ArrivalController {
 
     @GetMapping
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public List<ArrivalResponse> getAllItems() {
+    public List<ArrivalResponse> getAllArrivals() {
         return arrivalService.getAllArrivals();
+    }
+
+    @GetMapping("page")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public List<ArrivalResponse> getArrivalsPage(@RequestParam(name = "page") int page,
+                                                 @RequestParam(name = "size") int size) {
+        return arrivalService.getArrivalsPage(page, size);
+    }
+
+    @GetMapping("size")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public Integer getArrivalsNumber() {
+        return arrivalService.getAllArrivals().size();
     }
 
     @PostMapping("new")

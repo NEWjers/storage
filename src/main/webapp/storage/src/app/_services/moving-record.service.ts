@@ -14,4 +14,13 @@ export class MovingRecordService {
   getAllMovingRecords() {
     return this.http.get<MovingRecordResponse[]>(API_URL);
   }
+
+  getMovingRecordsPage(pageNumber: number, pageSize: number) {
+    const params = {page: pageNumber, size: pageSize};
+    return this.http.get<MovingRecordResponse[]>(API_URL + '/page', {params});
+  }
+
+  getMovingRecordsSize() {
+    return this.http.get<number>(API_URL + '/size');
+  }
 }
