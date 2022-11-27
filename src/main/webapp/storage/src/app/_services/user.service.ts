@@ -20,8 +20,8 @@ export class UserService {
     return this.http.get<User[]>(API_URL);
   }
 
-  getUsersPage(pageNumber: number, pageSize: number) {
-    const params = {page: pageNumber, size: pageSize};
+  getUsersPage(pageNumber: number, pageSize: number, sort: string, way: string) {
+    const params = {page: pageNumber, size: pageSize, sort: sort, way: way};
     return this.http.get<User[]>(API_URL + '/page', {params})
   }
 

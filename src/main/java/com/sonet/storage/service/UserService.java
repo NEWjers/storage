@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -45,8 +46,16 @@ public class UserService {
         );
     }
 
-    public List<UserResponse> getUsersPage(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
+    public List<UserResponse> getUsersPage(int page, int size, String sort, String way) {
+        Pageable pageable;
+        if ("asc".equals(way)) {
+            pageable = PageRequest.of(page, size, Sort.by(sort));
+        } else if ("desc".equals(way)){
+            pageable = PageRequest.of(page, size, Sort.by(sort).descending());
+        } else {
+            pageable = PageRequest.of(page, size);
+        }
+
         Page<User> users = userRepository.findAll(pageable);
 
         return users.stream().map(
