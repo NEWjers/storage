@@ -18,4 +18,13 @@ export class RecordService {
   getAllItems() {
     return this.http.get<Record[]>(API_URL);
   }
+
+  getRecordsPage(pageNumber: number, pageSize: number) {
+    const params = {page: pageNumber, size: pageSize};
+    return this.http.get<Record[]>(API_URL + '/page', {params});
+  }
+
+  getRecordsSize() {
+    return this.http.get<number>(API_URL + '/size');
+  }
 }

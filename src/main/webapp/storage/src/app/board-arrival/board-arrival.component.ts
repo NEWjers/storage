@@ -4,6 +4,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {ArrivalService} from "../_services/arrival.service";
 import {AddArrivalComponent} from "../add-arrival/add-arrival.component";
 import {ViewArrivalComponent} from "../view-arrival/view-arrival.component";
+import {PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-board-arrival',
@@ -14,15 +15,23 @@ export class BoardArrivalComponent implements OnInit {
 
   arrivals?: Arrival[];
 
+  totalElements: number = 0;
+
   constructor(
     private matDialog: MatDialog,
     private arrivalService: ArrivalService
   ) { }
 
   ngOnInit(): void {
-    this.arrivalService.getAllArrivals().subscribe(
+    this.arrivalService.getArrivalsPage(0, 13).subscribe(
       data => {
         this.arrivals = data;
+      }
+    );
+
+    this.arrivalService.getArrivalsSize().subscribe(
+      data => {
+        this.totalElements = data;
       }
     );
   }
@@ -46,4 +55,11 @@ export class BoardArrivalComponent implements OnInit {
     });
   }
 
+  nextPage(event: PageEvent) {
+    this.arrivalService.getArrivalsPage(event.pageIndex, event.pageSize).subscribe(
+      data => {
+        this.arrivals = data;
+      }
+    );
+  }
 }

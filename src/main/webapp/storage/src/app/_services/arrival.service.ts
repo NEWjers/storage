@@ -16,6 +16,15 @@ export class ArrivalService {
     return this.http.get<Arrival[]>(API_URL);
   }
 
+  getArrivalsPage(pageNumber: number, pageSize: number) {
+    const params = {page: pageNumber, size: pageSize};
+    return this.http.get<Arrival[]>(API_URL + '/page', {params});
+  }
+
+  getArrivalsSize() {
+    return this.http.get<number>(API_URL + '/size');
+  }
+
   createArrival(arrivalRequests: ArrivalRequest[]) {
     return this.http.request('POST', API_URL + "/new", {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),

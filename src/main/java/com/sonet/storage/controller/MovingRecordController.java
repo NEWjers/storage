@@ -4,10 +4,7 @@ import com.sonet.storage.dto.response.MovingRecordResponse;
 import com.sonet.storage.service.MovingRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,5 +20,18 @@ public class MovingRecordController {
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public List<MovingRecordResponse> getAllMovingRecords() {
         return movingRecordService.getAllMovingRecords();
+    }
+
+    @GetMapping("page")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public List<MovingRecordResponse> getMovingRecordsPage(@RequestParam(name = "page") int page,
+                                                           @RequestParam(name = "size") int size){
+        return movingRecordService.getMovingRecordsPage(page, size);
+    }
+
+    @GetMapping("size")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public Integer getMovingRecordsNumber() {
+        return movingRecordService.getAllMovingRecords().size();
     }
 }

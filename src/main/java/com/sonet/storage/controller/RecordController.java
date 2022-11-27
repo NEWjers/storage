@@ -4,10 +4,7 @@ import com.sonet.storage.dto.response.RecordResponse;
 import com.sonet.storage.service.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,5 +20,18 @@ public class RecordController {
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public List<RecordResponse> getAllItems() {
         return recordService.getAllRecords();
+    }
+
+    @GetMapping("page")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public List<RecordResponse> getRecordsPage(@RequestParam(name = "page") int page,
+                                               @RequestParam(name = "size") int size) {
+        return recordService.getRecordsPage(page, size);
+    }
+
+    @GetMapping("size")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public Integer getRecordsNumber() {
+        return recordService.getAllRecords().size();
     }
 }

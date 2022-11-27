@@ -28,3 +28,8 @@
   </tr>
   </tbody>
 </table>
+<mat-paginator [pageSizeOptions]="[13, 65, 130]"
+               (page)="nextPage($event)"
+               [length]="totalElements"
+               [pageSize]="13">
+</mat-paginator>

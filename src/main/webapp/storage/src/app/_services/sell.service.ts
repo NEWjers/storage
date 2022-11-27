@@ -16,6 +16,15 @@ export class SellService {
     return this.http.get<Sell[]>(API_URL);
   }
 
+  getSellsPage(pageNumber: number, pageSize: number) {
+    const params = {page: pageNumber, size: pageSize};
+    return this.http.get<Sell[]>(API_URL + '/page', {params});
+  }
+
+  getSellsSize() {
+    return this.http.get<number>(API_URL + '/size');
+  }
+
   createSell(sellRequests: SellRequest[]) {
     return this.http.request('POST', API_URL + "/new", {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
