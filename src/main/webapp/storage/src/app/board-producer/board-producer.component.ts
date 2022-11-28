@@ -5,6 +5,7 @@ import { Producer } from '../dto/Producer';
 import { ProducerService } from '../_services/producer.service';
 import {TokenStorageService} from "../_services/token-storage.service";
 import {PageEvent} from "@angular/material/paginator";
+import {Sort} from "@angular/material/sort";
 
 @Component({
   selector: 'app-board-producer',
@@ -19,6 +20,14 @@ export class BoardProducerComponent implements OnInit {
 
   totalElements: number = 0;
 
+  currentPage: number = 0;
+
+  currentSize: number = 9;
+
+  currentSort: string = '';
+
+  currentWay: string = '';
+
   constructor(
     private matDialog: MatDialog,
     private producerService: ProducerService,
@@ -26,7 +35,7 @@ export class BoardProducerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-      this.producerService.getProducersPage(0,9).subscribe(
+      this.producerService.getProducersPage(0,9, 'id', 'asc').subscribe(
         data => {
           this.producers = data;
         }
@@ -78,7 +87,19 @@ export class BoardProducerComponent implements OnInit {
   }
 
   nextPage(event: PageEvent) {
-    this.producerService.getProducersPage(event.pageIndex, event.pageSize).subscribe(
+    this.currentPage = event.pageIndex;
+    this.currentSize = event.pageSize;
+    this.producerService.getProducersPage(event.pageIndex, event.pageSize, this.currentSort, this.currentWay).subscribe(
+      data => {
+        this.producers = data;
+      }
+    );
+  }
+
+  sortData(sort: Sort) {
+    this.currentSort = sort.active;
+    this.currentWay = sort.direction;
+    this.producerService.getProducersPage(this.currentPage, this.currentSize, sort.active, sort.direction).subscribe(
       data => {
         this.producers = data;
       }
