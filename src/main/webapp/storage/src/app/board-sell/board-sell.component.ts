@@ -5,6 +5,7 @@ import {SellService} from "../_services/sell.service";
 import {AddSellComponent} from "../add-sell/add-sell.component";
 import {ViewSellComponent} from "../view-sell/view-sell.component";
 import {PageEvent} from "@angular/material/paginator";
+import {Sort} from "@angular/material/sort";
 
 @Component({
   selector: 'app-board-sell',
@@ -17,13 +18,21 @@ export class BoardSellComponent implements OnInit {
 
   totalElements: number = 0;
 
+  currentPage: number = 0;
+
+  currentSize: number = 13;
+
+  currentSort: string = '';
+
+  currentWay: string = '';
+
   constructor(
     private matDialog: MatDialog,
     private sellService: SellService
   ) { }
 
   ngOnInit(): void {
-    this.sellService.getSellsPage(0, 13).subscribe(
+    this.sellService.getSellsPage(0, 13, 'id', 'asc').subscribe(
       data => {
         this.sells = data;
       }
@@ -56,7 +65,19 @@ export class BoardSellComponent implements OnInit {
   }
 
   nextPage(event: PageEvent) {
-    this.sellService.getSellsPage(event.pageIndex, event.pageSize).subscribe(
+    this.currentPage = event.pageIndex;
+    this.currentSize = event.pageSize;
+    this.sellService.getSellsPage(event.pageIndex, event.pageSize, this.currentSort, this.currentWay).subscribe(
+      data => {
+        this.sells = data;
+      }
+    );
+  }
+
+  sortData(sort: Sort) {
+    this.currentSort = sort.active;
+    this.currentWay = sort.direction;
+    this.sellService.getSellsPage(this.currentPage, this.currentSize, sort.active, sort.direction).subscribe(
       data => {
         this.sells = data;
       }

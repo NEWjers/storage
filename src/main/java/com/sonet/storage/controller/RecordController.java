@@ -25,8 +25,10 @@ public class RecordController {
     @GetMapping("page")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public List<RecordResponse> getRecordsPage(@RequestParam(name = "page") int page,
-                                               @RequestParam(name = "size") int size) {
-        return recordService.getRecordsPage(page, size);
+                                               @RequestParam(name = "size") int size,
+                                               @RequestParam(name = "sort") String sort,
+                                               @RequestParam(name = "way") String way) {
+        return recordService.getRecordsPage(page, size, sort, way);
     }
 
     @GetMapping("size")

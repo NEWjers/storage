@@ -28,8 +28,10 @@ public class SellController {
     @GetMapping("page")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public List<SellResponse> getSellsPage(@RequestParam(name = "page") int page,
-                                           @RequestParam(name = "size") int size) {
-        return sellService.getSellsPage(page, size);
+                                           @RequestParam(name = "size") int size,
+                                           @RequestParam(name = "sort") String sort,
+                                           @RequestParam(name = "way") String way) {
+        return sellService.getSellsPage(page, size, sort, way);
     }
 
     @GetMapping("size")

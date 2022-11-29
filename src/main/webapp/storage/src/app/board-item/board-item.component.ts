@@ -6,6 +6,7 @@ import {Producer} from '../dto/Producer';
 import {ItemService} from '../_services/item.service';
 import {TokenStorageService} from "../_services/token-storage.service";
 import {PageEvent} from "@angular/material/paginator";
+import {Sort} from "@angular/material/sort";
 
 @Component({
   selector: 'app-board-item',
@@ -20,6 +21,14 @@ export class BoardItemComponent implements OnInit {
 
   totalElements: number = 0;
 
+  currentPage: number = 0;
+
+  currentSize: number = 9;
+
+  currentSort: string = '';
+
+  currentWay: string = '';
+
   constructor(
     private matDialog: MatDialog,
     private itemService: ItemService,
@@ -28,7 +37,7 @@ export class BoardItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.itemService.getItemsPage(0, 9).subscribe(
+    this.itemService.getItemsPage(0,9, 'code', 'asc').subscribe(
       data => {
         this.items = data;
       }
@@ -83,7 +92,19 @@ export class BoardItemComponent implements OnInit {
   }
 
   nextPage(event: PageEvent) {
-    this.itemService.getItemsPage(event.pageIndex, event.pageSize).subscribe(
+    this.currentPage = event.pageIndex;
+    this.currentSize = event.pageSize;
+    this.itemService.getItemsPage(event.pageIndex, event.pageSize, this.currentSort, this.currentWay).subscribe(
+      data => {
+        this.items = data;
+      }
+    );
+  }
+
+  sortData(sort: Sort) {
+    this.currentSort = sort.active;
+    this.currentWay = sort.direction;
+    this.itemService.getItemsPage(this.currentPage, this.currentSize, sort.active, sort.direction).subscribe(
       data => {
         this.items = data;
       }

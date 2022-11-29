@@ -27,8 +27,10 @@ public class UserController {
     @GetMapping("page")
     @PreAuthorize("hasRole('ADMIN')")
     public List<UserResponse> getUsersPage(@RequestParam(name = "page") int page,
-                                           @RequestParam(name = "size") int size) {
-        return userService.getUsersPage(page, size);
+                                           @RequestParam(name = "size") int size,
+                                           @RequestParam(name = "sort") String sort,
+                                           @RequestParam(name = "way") String way) {
+        return userService.getUsersPage(page, size, sort, way);
     }
 
     @GetMapping("size")

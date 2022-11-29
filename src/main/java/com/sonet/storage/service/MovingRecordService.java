@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,8 +32,16 @@ public class MovingRecordService {
         ).collect(Collectors.toList());
     }
 
-    public List<MovingRecordResponse> getMovingRecordsPage(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
+    public List<MovingRecordResponse> getMovingRecordsPage(int page, int size, String sort, String way) {
+        Pageable pageable;
+        if ("asc".equals(way)) {
+            pageable = PageRequest.of(page, size, Sort.by(sort));
+        } else if ("desc".equals(way)){
+            pageable = PageRequest.of(page, size, Sort.by(sort).descending());
+        } else {
+            pageable = PageRequest.of(page, size);
+        }
+
         Page<MovingRecord> movingRecords = movingRecordRepository.findAll(pageable);
 
         return movingRecords.stream().map(

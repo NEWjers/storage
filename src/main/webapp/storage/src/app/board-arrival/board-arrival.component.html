@@ -1,9 +1,9 @@
 <app-header></app-header>
-<table class="table table-bordered">
+<table class="table table-bordered" matSort (matSortChange)="sortData($event)">
   <thead class="table-success">
   <tr>
-    <th scope="col">Arrival</th>
-    <th scope="col">Date</th>
+    <th scope="col" mat-sort-header="id">Arrival</th>
+    <th scope="col" mat-sort-header="date">Date</th>
     <th scope="col" class="add"><button type="button" class="btn" id="add" (click)="addArrivalDialog('0ms', '0ms')">+</button></th>
   </tr>
   </thead>

@@ -20,8 +20,8 @@ export class ProducerService {
     return this.http.get<Producer[]>(API_URL);
   }
 
-  getProducersPage(pageNumber: number, pageSize: number) {
-    const params = {page: pageNumber, size: pageSize};
+  getProducersPage(pageNumber: number, pageSize: number, sort: string, way: string) {
+    const params = {page: pageNumber, size: pageSize, sort: sort, way: way};
     return this.http.get<Producer[]>(API_URL + '/page', {params});
   }
 

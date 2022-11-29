@@ -16,8 +16,8 @@ export class SellService {
     return this.http.get<Sell[]>(API_URL);
   }
 
-  getSellsPage(pageNumber: number, pageSize: number) {
-    const params = {page: pageNumber, size: pageSize};
+  getSellsPage(pageNumber: number, pageSize: number, sort: string, way: string) {
+    const params = {page: pageNumber, size: pageSize, sort: sort, way: way};
     return this.http.get<Sell[]>(API_URL + '/page', {params});
   }
 

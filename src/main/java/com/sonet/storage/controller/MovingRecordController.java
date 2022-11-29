@@ -25,8 +25,10 @@ public class MovingRecordController {
     @GetMapping("page")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public List<MovingRecordResponse> getMovingRecordsPage(@RequestParam(name = "page") int page,
-                                                           @RequestParam(name = "size") int size){
-        return movingRecordService.getMovingRecordsPage(page, size);
+                                                           @RequestParam(name = "size") int size,
+                                                           @RequestParam(name = "sort") String sort,
+                                                           @RequestParam(name = "way") String way){
+        return movingRecordService.getMovingRecordsPage(page, size, sort, way);
     }
 
     @GetMapping("size")

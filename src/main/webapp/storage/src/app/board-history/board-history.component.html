@@ -1,16 +1,16 @@
 <app-header></app-header>
-<table class="table table-bordered">
+<table class="table table-bordered" matSort (matSortChange)="sortData($event)">
   <thead class="table-success">
   <tr >
-    <th scope="col">Date</th>
-    <th scope="col">Moving type</th>
-    <th scope="col">Code</th>
-    <th scope="col">Size</th>
-    <th scope="col">Pack</th>
-    <th scope="col">Price</th>
-    <th scope="col">Description</th>
-    <th scope="col">Producer</th>
-    <th scope="col">Count</th>
+    <th scope="col" mat-sort-header="date">Date</th>
+    <th scope="col" mat-sort-header="type">Moving type</th>
+    <th scope="col" mat-sort-header="item.code">Code</th>
+    <th scope="col" mat-sort-header="item.size">Size</th>
+    <th scope="col" mat-sort-header="item.pack">Pack</th>
+    <th scope="col" mat-sort-header="item.price">Price</th>
+    <th scope="col" mat-sort-header="item.description">Description</th>
+    <th scope="col" mat-sort-header="item.producer.name">Producer</th>
+    <th scope="col" mat-sort-header="count">Count</th>
   </tr>
   </thead>
   <tbody>

@@ -28,8 +28,10 @@ public class ProducerController {
     @GetMapping("page")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public List<ProducerResponse> getProducersPage(@RequestParam(name = "page") int page,
-                                                   @RequestParam(name = "size") int size) {
-        return producerService.getProducersPage(page, size);
+                                                   @RequestParam(name = "size") int size,
+                                                   @RequestParam(name = "sort") String sort,
+                                                   @RequestParam(name = "way") String way) {
+        return producerService.getProducersPage(page, size, sort, way);
     }
 
     @GetMapping("size")
