@@ -15,8 +15,8 @@ export class MovingRecordService {
     return this.http.get<MovingRecordResponse[]>(API_URL);
   }
 
-  getMovingRecordsPage(pageNumber: number, pageSize: number) {
-    const params = {page: pageNumber, size: pageSize};
+  getMovingRecordsPage(pageNumber: number, pageSize: number, sort: string, way: string) {
+    const params = {page: pageNumber, size: pageSize, sort: sort, way: way};
     return this.http.get<MovingRecordResponse[]>(API_URL + '/page', {params});
   }
 

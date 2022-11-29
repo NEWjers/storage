@@ -14,6 +14,7 @@ import com.sonet.storage.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -59,8 +60,16 @@ public class ArrivalService {
         ).collect(Collectors.toList());
     }
 
-    public List<ArrivalResponse> getArrivalsPage(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
+    public List<ArrivalResponse> getArrivalsPage(int page, int size, String sort, String way) {
+        Pageable pageable;
+        if ("asc".equals(way)) {
+            pageable = PageRequest.of(page, size, Sort.by(sort));
+        } else if ("desc".equals(way)){
+            pageable = PageRequest.of(page, size, Sort.by(sort).descending());
+        } else {
+            pageable = PageRequest.of(page, size);
+        }
+
         return arrivalRepository.findAll(pageable).stream().map(
                 arrival -> new ArrivalResponse(
                         arrival.getId(),

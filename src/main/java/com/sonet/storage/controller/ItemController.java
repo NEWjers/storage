@@ -28,8 +28,10 @@ public class ItemController {
     @GetMapping("page")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public List<ItemResponse> getItemsPage(@RequestParam(name = "page") int page,
-                                           @RequestParam(name = "size") int size) {
-        return itemService.getItemsPage(page, size);
+                                           @RequestParam(name = "size") int size,
+                                           @RequestParam(name = "sort") String sort,
+                                           @RequestParam(name = "way") String way) {
+        return itemService.getItemsPage(page, size, sort, way);
     }
 
     @GetMapping("size")

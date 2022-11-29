@@ -1,13 +1,13 @@
 <app-header></app-header>
-<table class="table table-bordered">
+<table class="table table-bordered" matSort (matSortChange)="sortData($event)">
     <thead class="table-success">
         <tr >
-            <th scope="col">Code</th>
-            <th scope="col">Size</th>
-            <th scope="col">Pack</th>
-            <th scope="col">Price</th>
-            <th scope="col">Description</th>
-            <th scope="col">Producer</th>
+            <th scope="col" mat-sort-header="code">Code</th>
+            <th scope="col" mat-sort-header="size">Size</th>
+            <th scope="col" mat-sort-header="pack">Pack</th>
+            <th scope="col" mat-sort-header="price">Price</th>
+            <th scope="col" mat-sort-header="description">Description</th>
+            <th scope="col" mat-sort-header="producer.name">Producer</th>
             <th scope="col" *ngIf="isAdmin" class="add"><button type="button" class="btn" id="add" (click)="addItemDialog('0ms', '0ms')">+</button></th>
           </tr>
     </thead>

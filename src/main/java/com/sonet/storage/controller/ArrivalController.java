@@ -28,8 +28,10 @@ public class ArrivalController {
     @GetMapping("page")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public List<ArrivalResponse> getArrivalsPage(@RequestParam(name = "page") int page,
-                                                 @RequestParam(name = "size") int size) {
-        return arrivalService.getArrivalsPage(page, size);
+                                                 @RequestParam(name = "size") int size,
+                                                 @RequestParam(name = "sort") String sort,
+                                                 @RequestParam(name = "way") String way) {
+        return arrivalService.getArrivalsPage(page, size, sort, way);
     }
 
     @GetMapping("size")

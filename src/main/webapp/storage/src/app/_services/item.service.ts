@@ -19,8 +19,8 @@ export class ItemService {
     return this.http.get<Item[]>(API_URL);
   }
 
-  getItemsPage(pageNumber: number, pageSize: number) {
-    const params = {page: pageNumber, size: pageSize};
+  getItemsPage(pageNumber: number, pageSize: number, sort: string, way: string) {
+    const params = {page: pageNumber, size: pageSize, sort: sort, way: way};
     return this.http.get<Item[]>(API_URL + '/page', {params});
   }
 
