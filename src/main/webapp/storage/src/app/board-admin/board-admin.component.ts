@@ -110,4 +110,18 @@ export class BoardAdminComponent implements OnInit {
       }
     );
   }
+
+  onFilter() {
+     this.userService.getUsersPage(this.currentPage, this.currentSize, this.currentSort, this.currentWay, this.id, this.username, this.role).subscribe(
+      data => {
+        this.users = data;
+      }
+    );
+
+    this.userService.getUsersSize(this.id, this.username, this.role).subscribe(
+      data => {
+        this.totalElements = data;
+      }
+    );
+  }
 }

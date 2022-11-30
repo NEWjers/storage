@@ -2,8 +2,6 @@ package com.sonet.storage.specification;
 
 import com.sonet.storage.model.user.Role;
 import com.sonet.storage.model.user.User;
-import com.sonet.storage.repository.RoleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.Predicate;
