@@ -80,25 +80,24 @@ public class AuthController {
                 encoder.encode(signUpRequest.getPassword()));
 
         String strRole = signUpRequest.getRole();
-        Set<Role> roles = new HashSet<>();
 
         if (strRole == null) {
             Role userRole = roleRepository.findByName(ERole.ROLE_USER)
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-            roles.add(userRole);
+            user.setRole(userRole);
         } else {
-            if ("admin".equals(strRole)) {
+            if ("admin".equals(strRole) || ERole.ROLE_ADMIN.name().equals(strRole)) {
                 Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
                         .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                roles.add(adminRole);
+                user.setRole(adminRole);
             } else {
                 Role userRole = roleRepository.findByName(ERole.ROLE_USER)
                         .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                roles.add(userRole);
+                user.setRole(userRole);
             }
         }
 
-        user.setRoles(roles);
+        user.setIsArchived(false);
         userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));

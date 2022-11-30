@@ -1,6 +1,7 @@
 package com.sonet.storage.model.sell;
 
 import com.sonet.storage.model.moving.MovingRecord;
+import com.sonet.storage.model.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,6 +21,9 @@ public class Sell {
     private Long id;
 
     private String date;
+
+    @ManyToOne
+    private User user;
 
     @OneToMany
     private List<MovingRecord> items;

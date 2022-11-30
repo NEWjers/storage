@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -42,16 +43,21 @@ public class SellService {
     @Autowired
     private MovingRecordRepository movingRecordRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     public List<SellResponse> getAllSells() {
         return sellRepository.findByOrderByIdAsc().stream().map(
                 sell -> new SellResponse(
                         sell.getId(),
                         sell.getDate(),
+                        sell.getUser().getUsername(),
                         sell.getItems().stream().map(
                                 movingRecord -> new MovingRecordResponse(
                                         movingRecord.getCount(),
                                         movingRecord.getDate(),
                                         movingRecord.getType().getName().name(),
+                                        movingRecord.getUser().getUsername(),
                                         movingRecord.getItem()
                                 )
                         ).collect(Collectors.toList())
@@ -73,11 +79,13 @@ public class SellService {
                 sell -> new SellResponse(
                         sell.getId(),
                         sell.getDate(),
+                        sell.getUser().getUsername(),
                         sell.getItems().stream().map(
                                 movingRecord -> new MovingRecordResponse(
                                         movingRecord.getCount(),
                                         movingRecord.getDate(),
                                         movingRecord.getType().getName().name(),
+                                        movingRecord.getUser().getUsername(),
                                         movingRecord.getItem()
                                 )
                         ).collect(Collectors.toList())
@@ -90,6 +98,9 @@ public class SellService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         sell.setDate(LocalDateTime.now().format(formatter));
 
+        sell.setUser(userRepository.findByUsername(sells.get(0).getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("User does not exist")));
+
         List<MovingRecord> movingRecords = new ArrayList<>();
 
         sells.forEach(sellRequest -> {
@@ -99,6 +110,9 @@ public class SellService {
                 movingRecord.setDate(LocalDateTime.now().format(formatter));
                 movingRecord.setCount(Long.parseLong(sellRequest.getItemCount()));
                 movingRecord.setItem(item);
+
+                movingRecord.setUser(userRepository.findByUsername(sellRequest.getUsername())
+                        .orElseThrow(() -> new UsernameNotFoundException("User does not exist")));
 
                 MovingType movingType = movingTypeRepository.findByName(EMovingType.SELL).orElse(null);
                 movingRecord.setType(movingType);

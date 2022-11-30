@@ -3,9 +3,11 @@ package com.sonet.storage.service;
 import com.sonet.storage.dto.request.user.UpdateUserRequest;
 import com.sonet.storage.dto.response.MessageResponse;
 import com.sonet.storage.dto.response.UserResponse;
+import com.sonet.storage.model.moving.MovingRecord;
 import com.sonet.storage.model.user.ERole;
 import com.sonet.storage.model.user.Role;
 import com.sonet.storage.model.user.User;
+import com.sonet.storage.repository.MovingRecordRepository;
 import com.sonet.storage.repository.RoleRepository;
 import com.sonet.storage.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +37,9 @@ public class UserService {
     @Autowired
     private RoleRepository roleRepository;
 
+    @Autowired
+    private MovingRecordRepository movingRecordRepository;
+
     public List<UserResponse> getAllUsers() {
         List<User> users = userRepository.findByOrderByIdAsc();
 
@@ -41,7 +47,8 @@ public class UserService {
                 user -> new UserResponse(
                         user.getId(),
                         user.getUsername(),
-                        getMainRoleString(user.getRoles())
+                        user.getRole().getName().name(),
+                        user.getIsArchived()
                 )).collect(Collectors.toList()
         );
     }
@@ -62,7 +69,8 @@ public class UserService {
                 user -> new UserResponse(
                         user.getId(),
                         user.getUsername(),
-                        getMainRoleString(user.getRoles())
+                        user.getRole().getName().name(),
+                        user.getIsArchived()
                 )).collect(Collectors.toList()
         );
     }
@@ -85,25 +93,23 @@ public class UserService {
         }
 
         String strRole = updateRequest.getRole();
-        Set<Role> roles = new HashSet<>();
 
         if (strRole == null) {
             Role userRole = roleRepository.findByName(ERole.ROLE_USER)
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-            roles.add(userRole);
+            user.setRole(userRole);
         } else {
-            if ("admin".equals(strRole)) {
+            if ("admin".equals(strRole) || ROLE_ADMIN.name().equals(strRole)) {
                 Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
                         .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                roles.add(adminRole);
+                user.setRole(adminRole);
             } else {
                 Role userRole = roleRepository.findByName(ERole.ROLE_USER)
                         .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                roles.add(userRole);
+                user.setRole(userRole);
             }
         }
 
-        user.setRoles(roles);
         userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User created successfully!"));
@@ -116,20 +122,20 @@ public class UserService {
                     .build();
         }
 
-        userRepository.deleteById(id);
+        if (isUserInvolved(id)) {
+            User user = userRepository.getById(id);
+            user.setIsArchived(true);
+            userRepository.save(user);
+        } else {
+            userRepository.deleteById(id);
+        }
 
         return ResponseEntity.ok(new MessageResponse("User deleted successfully!"));
     }
 
-    private String getMainRoleString(Set<Role> roles) {
-        List<String> mainRole = new ArrayList<>();
-        roles.forEach(role -> {
-            if (ROLE_ADMIN.equals(role.getName())) {
-                mainRole.add("admin");
-            } else {
-                mainRole.add("user");
-            }
-        });
-        return mainRole.get(0);
+    private boolean isUserInvolved(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("User was not found"));
+        List<MovingRecord> movingRecords = movingRecordRepository.findByUser(user);
+        return !movingRecords.isEmpty();
     }
 }

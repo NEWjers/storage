@@ -20,6 +20,8 @@ export class AddUserComponent implements OnInit {
 
   errorMessage = '';
 
+  isNotCurrentUser: boolean = true;
+
   constructor(
     private authService: AuthService,
     private dialogRef: MatDialogRef<AddUserComponent>,
@@ -34,6 +36,8 @@ export class AddUserComponent implements OnInit {
         role: this.data.role
       };
     }
+
+    this.isNotCurrentUser = this.data.isNotCurrentUser;
   }
 
   onSubmit() {

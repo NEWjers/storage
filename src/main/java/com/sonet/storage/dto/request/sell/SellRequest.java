@@ -10,5 +10,7 @@ public class SellRequest {
 
     private String itemCount;
 
+    private String username;
+
     private Item item;
 }

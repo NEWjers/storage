@@ -27,6 +27,7 @@ public class MovingRecordService {
                         movingRecord.getCount(),
                         movingRecord.getDate(),
                         movingRecord.getType().getName().name(),
+                        movingRecord.getUser().getUsername(),
                         movingRecord.getItem()
                 )
         ).collect(Collectors.toList());
@@ -49,6 +50,7 @@ public class MovingRecordService {
                         movingRecord.getCount(),
                         movingRecord.getDate(),
                         movingRecord.getType().getName().name(),
+                        movingRecord.getUser().getUsername(),
                         movingRecord.getItem()
                 )
         ).collect(Collectors.toList());

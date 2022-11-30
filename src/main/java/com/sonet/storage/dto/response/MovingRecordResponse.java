@@ -16,5 +16,7 @@ public class MovingRecordResponse {
 
     private String type;
 
+    private String username;
+
     private Item item;
 }

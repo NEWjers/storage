@@ -12,10 +12,12 @@ import com.sonet.storage.model.moving.MovingType;
 import com.sonet.storage.model.record.Record;
 import com.sonet.storage.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -42,17 +44,22 @@ public class ArrivalService {
     @Autowired
     private MovingRecordRepository movingRecordRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     public List<ArrivalResponse> getAllArrivals() {
 
         return arrivalRepository.findByOrderByIdAsc().stream().map(
                 arrival -> new ArrivalResponse(
                         arrival.getId(),
                         arrival.getDate(),
+                        arrival.getUser().getUsername(),
                         arrival.getItems().stream().map(
                                 movingRecord -> new MovingRecordResponse(
                                         movingRecord.getCount(),
                                         movingRecord.getDate(),
                                         movingRecord.getType().getName().name(),
+                                        movingRecord.getUser().getUsername(),
                                         movingRecord.getItem()
                                 )
                         ).collect(Collectors.toList())
@@ -74,11 +81,13 @@ public class ArrivalService {
                 arrival -> new ArrivalResponse(
                         arrival.getId(),
                         arrival.getDate(),
+                        arrival.getUser().getUsername(),
                         arrival.getItems().stream().map(
                                 movingRecord -> new MovingRecordResponse(
                                         movingRecord.getCount(),
                                         movingRecord.getDate(),
                                         movingRecord.getType().getName().name(),
+                                        movingRecord.getUser().getUsername(),
                                         movingRecord.getItem()
                                 )
                         ).collect(Collectors.toList())
@@ -91,6 +100,9 @@ public class ArrivalService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         arrival.setDate(LocalDateTime.now().format(formatter));
 
+        arrival.setUser(userRepository.findByUsername(arrivals.get(0).getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("User does not exist")));
+
         List<MovingRecord> movingRecords = new ArrayList<>();
 
         arrivals.forEach(arrivalRequest -> {
@@ -100,6 +112,9 @@ public class ArrivalService {
                 movingRecord.setDate(LocalDateTime.now().format(formatter));
                 movingRecord.setCount(Long.parseLong(arrivalRequest.getItemCount()));
                 movingRecord.setItem(item);
+
+                movingRecord.setUser(userRepository.findByUsername(arrivalRequest.getUsername())
+                        .orElseThrow(() -> new UsernameNotFoundException("User does not exist")));
 
                 MovingType movingType = movingTypeRepository.findByName(EMovingType.ARRIVAL).orElse(null);
                 movingRecord.setType(movingType);
