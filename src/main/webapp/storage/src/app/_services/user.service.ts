@@ -16,17 +16,14 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  getAllUsers(): Observable<User[]> {
-    return this.http.get<User[]>(API_URL);
-  }
-
-  getUsersPage(pageNumber: number, pageSize: number, sort: string, way: string) {
-    const params = {page: pageNumber, size: pageSize, sort: sort, way: way};
+  getUsersPage(pageNumber: number, pageSize: number, sort: string, way: string, id: string, username: string, role: string) {
+    const params = {page: pageNumber, size: pageSize, sort: sort, way: way, id: id, username: username, role: role};
     return this.http.get<User[]>(API_URL + '/page', {params})
   }
 
-  getUsersSize() {
-    return this.http.get<number>(API_URL + '/size');
+  getUsersSize(id: string, username: string, role: string) {
+    const params = {id: id, username: username, role: role};
+    return this.http.get<number>(API_URL + '/size', {params});
   }
 
   updateUser(id: number, username: string, role: string, password: string): Observable<any> {

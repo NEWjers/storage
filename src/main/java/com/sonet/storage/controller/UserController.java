@@ -18,25 +18,24 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
-    public List<UserResponse> getAllUsers() {
-        return userService.getAllUsers();
-    }
-
     @GetMapping("page")
     @PreAuthorize("hasRole('ADMIN')")
     public List<UserResponse> getUsersPage(@RequestParam(name = "page") int page,
                                            @RequestParam(name = "size") int size,
                                            @RequestParam(name = "sort") String sort,
-                                           @RequestParam(name = "way") String way) {
-        return userService.getUsersPage(page, size, sort, way);
+                                           @RequestParam(name = "way") String way,
+                                           @RequestParam(name = "id") String id,
+                                           @RequestParam(name = "username") String username,
+                                           @RequestParam(name = "role") String role) {
+        return userService.getUsersPage(page, size, sort, way, id, username, role);
     }
 
     @GetMapping("size")
     @PreAuthorize("hasRole('ADMIN')")
-    public Integer getUsersNumber() {
-        return userService.getAllUsers().size();
+    public Integer getUsersNumber(@RequestParam(name = "id") String id,
+                                  @RequestParam(name = "username") String username,
+                                  @RequestParam(name = "role") String role) {
+        return userService.getAllUsers(id, username, role).size();
     }
 
     @PostMapping
