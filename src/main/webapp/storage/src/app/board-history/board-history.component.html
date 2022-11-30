@@ -3,6 +3,7 @@
   <thead class="table-success">
   <tr >
     <th scope="col" mat-sort-header="date">Date</th>
+    <th scope="col" mat-sort-header="user.username">User</th>
     <th scope="col" mat-sort-header="type">Moving type</th>
     <th scope="col" mat-sort-header="item.code">Code</th>
     <th scope="col" mat-sort-header="item.size">Size</th>
@@ -16,6 +17,7 @@
   <tbody>
   <tr *ngFor="let movingRecord of movingRecords">
     <td>{{ movingRecord.date }}</td>
+    <td>{{ movingRecord.username }}</td>
     <td>{{ movingRecord.type }}</td>
     <td>{{ movingRecord.item.code }}</td>
     <td>{{ movingRecord.item.size }}</td>

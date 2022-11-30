@@ -15,5 +15,7 @@ public class SellResponse {
 
     private String date;
 
+    private String username;
+
     private List<MovingRecordResponse> items;
 }

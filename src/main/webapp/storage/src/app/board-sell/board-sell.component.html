@@ -4,14 +4,14 @@
   <tr>
     <th scope="col" mat-sort-header="id">Sell</th>
     <th scope="col" mat-sort-header="date">Date</th>
-    <th scope="col" class="add"><button type="button" class="btn" id="add" (click)="addSellDialog('0ms', '0ms')">+</button></th>
+    <th scope="col" mat-sort-header="user.username" class="add"><button type="button" class="btn" id="add" (click)="addSellDialog('0ms', '0ms')">+</button></th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let sell of sells">
     <td><a class="link-dark" (click)="viewSellDialog('0ms', '0ms', sell)">Sell #{{ sell.id }}</a></td>
     <td><a class="link-dark" (click)="viewSellDialog('0ms', '0ms', sell)">{{ sell.date }}</a></td>
-    <td></td>
+    <td><a class="link-dark" (click)="viewSellDialog('0ms', '0ms', sell)">{{ sell.username }}</a></td>
   </tr>
   </tbody>
 </table>

@@ -4,6 +4,7 @@ import {ArrivalRequest} from "../dto/ArrivalRequest";
 import {ItemService} from "../_services/item.service";
 import {SellService} from "../_services/sell.service";
 import {MatDialogRef} from "@angular/material/dialog";
+import {TokenStorageService} from "../_services/token-storage.service";
 
 @Component({
   selector: 'app-add-sell',
@@ -18,10 +19,13 @@ export class AddSellComponent implements OnInit {
 
   searchText = '';
 
+  currentUser: any;
+
   constructor(
     private itemService: ItemService,
     private sellService: SellService,
-    private dialogRef: MatDialogRef<AddSellComponent>
+    private dialogRef: MatDialogRef<AddSellComponent>,
+    private token: TokenStorageService
   ) { }
 
   ngOnInit(): void {
@@ -30,6 +34,8 @@ export class AddSellComponent implements OnInit {
         this.items = data;
       }
     );
+
+    this.currentUser = this.token.getUser();
   }
 
   onSubmit() {
@@ -42,7 +48,7 @@ export class AddSellComponent implements OnInit {
   }
 
   addItem(item: Item) {
-    this.selectedItems.push(new ArrivalRequest('', item));
+    this.selectedItems.push(new ArrivalRequest('', this.currentUser.username, item));
     (document.getElementById('search-text') as HTMLInputElement).focus();
   }
 

@@ -2,7 +2,7 @@
 <h2 *ngIf="this.data.type == 'update'">Update user</h2>
 <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
     <div class="form-group">
-        <label for="username">Username</label>
+        <label>Username</label>
         <input type="text" class="form-control" name="username" [(ngModel)]="form.username" required
             #username="ngModel" />
         <div class="alert alert-danger" role="alert" *ngIf="username.errors && f.submitted">
@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="form-group" *ngIf="this.data.type == 'create'">
-        <label for="password">Password</label>
+        <label>Password</label>
         <input type="password" class="form-control" name="password" [(ngModel)]="form.password" required minlength="6"
             #password="ngModel" />
         <div class="alert alert-danger" role="alert" *ngIf="password.errors && f.submitted">
@@ -21,7 +21,7 @@
         </div>
     </div>
     <div class="form-group" *ngIf="this.data.type == 'update'">
-        <label for="password">New password</label>
+        <label>New password</label>
         <input type="password" class="form-control" name="password" [(ngModel)]="form.password" minlength="6"
             #password="ngModel" />
         <div class="alert alert-danger" role="alert" *ngIf="password.errors && f.submitted">
@@ -30,12 +30,12 @@
             </div>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" *ngIf="isNotCurrentUser">
         <label>
-            <input type="radio" class="form-group" name="role" [(ngModel)]="form.role" value="admin" /> Administrator
+            <input type="radio" class="form-group" name="role" [(ngModel)]="form.role" value="ROLE_ADMIN" /> Administrator
         </label>
         <label>
-            <input type="radio" class="form-group" name="role" [(ngModel)]="form.role" value="user"/> User
+            <input type="radio" class="form-group" name="role" [(ngModel)]="form.role" value="ROLE_USER"/> User
         </label>
     </div>
     <div class="form-group">

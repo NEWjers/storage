@@ -10,5 +10,7 @@ public class ArrivalRequest {
 
     private String itemCount;
 
+    private String username;
+
     private Item item;
 }

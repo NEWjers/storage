@@ -4,6 +4,7 @@ import {ItemService} from "../_services/item.service";
 import {ArrivalRequest} from "../dto/ArrivalRequest";
 import {ArrivalService} from "../_services/arrival.service";
 import {MatDialogRef} from "@angular/material/dialog";
+import {TokenStorageService} from "../_services/token-storage.service";
 
 @Component({
   selector: 'app-add-arrival',
@@ -18,10 +19,13 @@ export class AddArrivalComponent implements OnInit {
 
   searchText = '';
 
+  currentUser: any;
+
   constructor(
     private itemService: ItemService,
     private arrivalService: ArrivalService,
-    private dialogRef: MatDialogRef<AddArrivalComponent>
+    private dialogRef: MatDialogRef<AddArrivalComponent>,
+    private token: TokenStorageService
   ) { }
 
   ngOnInit(): void {
@@ -29,7 +33,9 @@ export class AddArrivalComponent implements OnInit {
       data => {
         this.items = data;
       }
-    )
+    );
+
+    this.currentUser = this.token.getUser();
   }
 
   onSubmit() {
@@ -42,7 +48,7 @@ export class AddArrivalComponent implements OnInit {
   }
 
   addItem(item: Item) {
-    this.selectedItems.push(new ArrivalRequest('', item));
+    this.selectedItems.push(new ArrivalRequest('', this.currentUser.username, item));
     (document.getElementById('search-text') as HTMLInputElement).focus();
   }
 

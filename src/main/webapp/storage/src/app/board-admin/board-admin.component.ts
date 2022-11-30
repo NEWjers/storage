@@ -5,6 +5,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {AddUserComponent} from '../add-user/add-user.component';
 import {PageEvent} from "@angular/material/paginator";
 import {Sort} from "@angular/material/sort";
+import {TokenStorageService} from "../_services/token-storage.service";
 
 @Component({
   selector: 'app-board-admin',
@@ -24,9 +25,12 @@ export class BoardAdminComponent implements OnInit {
 
   currentWay: string = '';
 
+  currentUser: any;
+
   constructor(
     private userService: UserService,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private token: TokenStorageService
   ) {
   }
 
@@ -42,6 +46,8 @@ export class BoardAdminComponent implements OnInit {
         this.totalElements = data;
       }
     );
+
+    this.currentUser = this.token.getUser();
   }
 
   addUserDialog(enterAnimationDuration: string, exitAnimationDuration: string) {
@@ -50,7 +56,8 @@ export class BoardAdminComponent implements OnInit {
       enterAnimationDuration,
       exitAnimationDuration,
       data: {
-        type: 'create'
+        type: 'create',
+        isNotCurrentUser: true
       }
     });
   }
@@ -64,7 +71,8 @@ export class BoardAdminComponent implements OnInit {
         type: 'update',
         username: username,
         role: role,
-        id: id
+        id: id,
+        isNotCurrentUser: this.currentUser.username != username
       }
     });
   }
@@ -96,5 +104,4 @@ export class BoardAdminComponent implements OnInit {
       }
     );
   }
-
 }

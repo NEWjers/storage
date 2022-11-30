@@ -1,6 +1,7 @@
 package com.sonet.storage.model.moving;
 
 import com.sonet.storage.model.item.Item;
+import com.sonet.storage.model.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,6 +24,9 @@ public class MovingRecord {
     private Long count;
 
     private String date;
+
+    @ManyToOne
+    private User user;
 
     @OneToOne
     @JoinTable(  name = "moving_record_type",
