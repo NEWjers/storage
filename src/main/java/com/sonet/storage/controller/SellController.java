@@ -19,25 +19,24 @@ public class SellController {
     @Autowired
     private SellService sellService;
 
-    @GetMapping
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public List<SellResponse> getAllSells() {
-        return sellService.getAllSells();
-    }
-
     @GetMapping("page")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public List<SellResponse> getSellsPage(@RequestParam(name = "page") int page,
                                            @RequestParam(name = "size") int size,
                                            @RequestParam(name = "sort") String sort,
-                                           @RequestParam(name = "way") String way) {
-        return sellService.getSellsPage(page, size, sort, way);
+                                           @RequestParam(name = "way") String way,
+                                           @RequestParam(name = "id") String id,
+                                           @RequestParam(name = "date") String date,
+                                           @RequestParam(name = "user") String user) {
+        return sellService.getSellsPage(page, size, sort, way, id, date, user);
     }
 
     @GetMapping("size")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public Integer getSellsNumber() {
-        return sellService.getAllSells().size();
+    public Integer getSellsNumber(@RequestParam(name = "id") String id,
+                                  @RequestParam(name = "date") String date,
+                                  @RequestParam(name = "user") String user) {
+        return sellService.getAllSellsSize(id, date, user).size();
     }
 
     @PostMapping("new")

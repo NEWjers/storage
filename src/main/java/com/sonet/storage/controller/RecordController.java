@@ -16,24 +16,36 @@ public class RecordController {
     @Autowired
     private RecordService recordService;
 
-    @GetMapping
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public List<RecordResponse> getAllItems() {
-        return recordService.getAllRecords();
-    }
-
     @GetMapping("page")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public List<RecordResponse> getRecordsPage(@RequestParam(name = "page") int page,
                                                @RequestParam(name = "size") int size,
                                                @RequestParam(name = "sort") String sort,
-                                               @RequestParam(name = "way") String way) {
-        return recordService.getRecordsPage(page, size, sort, way);
+                                               @RequestParam(name = "way") String way,
+                                               @RequestParam(name = "id") String id,
+                                               @RequestParam(name = "code") String code,
+                                               @RequestParam(name = "itemSize") String itemSize,
+                                               @RequestParam(name = "pack") String pack,
+                                               @RequestParam(name = "price") String price,
+                                               @RequestParam(name = "description") String description,
+                                               @RequestParam(name = "producer") String producer,
+                                               @RequestParam(name = "count") String count) {
+
+        return recordService
+                .getRecordsPage(page, size, sort, way, id, code, itemSize, pack, price, description, producer, count);
     }
 
     @GetMapping("size")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public Integer getRecordsNumber() {
-        return recordService.getAllRecords().size();
+    public Integer getRecordsNumber(@RequestParam(name = "id") String id,
+                                    @RequestParam(name = "code") String code,
+                                    @RequestParam(name = "itemSize") String itemSize,
+                                    @RequestParam(name = "pack") String pack,
+                                    @RequestParam(name = "price") String price,
+                                    @RequestParam(name = "description") String description,
+                                    @RequestParam(name = "producer") String producer,
+                                    @RequestParam(name = "count") String count) {
+
+        return recordService.getAllRecordsSize(id, code, itemSize, pack, price, description, producer, count).size();
     }
 }

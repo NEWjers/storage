@@ -26,19 +26,25 @@ export class BoardArrivalComponent implements OnInit {
 
   currentWay: string = '';
 
+  id: string = '';
+
+  date: string = '';
+
+  user: string = '';
+
   constructor(
     private matDialog: MatDialog,
     private arrivalService: ArrivalService
   ) { }
 
   ngOnInit(): void {
-    this.arrivalService.getArrivalsPage(0, 13, 'id', 'asc').subscribe(
+    this.arrivalService.getArrivalsPage(0, 13, 'id', 'asc', this.id, this.date, this.user).subscribe(
       data => {
         this.arrivals = data;
       }
     );
 
-    this.arrivalService.getArrivalsSize().subscribe(
+    this.arrivalService.getArrivalsSize(this.id, this.date, this.user).subscribe(
       data => {
         this.totalElements = data;
       }
@@ -67,7 +73,7 @@ export class BoardArrivalComponent implements OnInit {
   nextPage(event: PageEvent) {
     this.currentPage = event.pageIndex;
     this.currentSize = event.pageSize;
-    this.arrivalService.getArrivalsPage(event.pageIndex, event.pageSize, this.currentSort, this.currentWay).subscribe(
+    this.arrivalService.getArrivalsPage(event.pageIndex, event.pageSize, this.currentSort, this.currentWay, this.id, this.date, this.user).subscribe(
       data => {
         this.arrivals = data;
       }
@@ -77,9 +83,23 @@ export class BoardArrivalComponent implements OnInit {
   sortData(sort: Sort) {
     this.currentSort = sort.active;
     this.currentWay = sort.direction;
-    this.arrivalService.getArrivalsPage(this.currentPage, this.currentSize, sort.active, sort.direction).subscribe(
+    this.arrivalService.getArrivalsPage(this.currentPage, this.currentSize, sort.active, sort.direction, this.id, this.date, this.user).subscribe(
       data => {
         this.arrivals = data;
+      }
+    );
+  }
+
+  onFilter() {
+    this.arrivalService.getArrivalsPage(this.currentPage, this.currentSize, this.currentSort, this.currentWay, this.id, this.date, this.user).subscribe(
+      data => {
+        this.arrivals = data;
+      }
+    );
+
+    this.arrivalService.getArrivalsSize(this.id, this.date, this.user).subscribe(
+      data => {
+        this.totalElements = data;
       }
     );
   }

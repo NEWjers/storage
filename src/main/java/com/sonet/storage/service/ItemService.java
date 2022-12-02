@@ -49,10 +49,8 @@ public class ItemService {
     public Integer getAllItemsSize(String code, String itemSize, String pack, String price,
                                    String description, String producer) {
 
-        Producer requiredProducer = producerRepository.findByName(producer).orElse(null);
-
         List<Item> items = itemRepository.findAll(ItemSpecification
-                .getItemSpecification(code, itemSize, pack, price, description, requiredProducer));
+                .getItemSpecification(code, itemSize, pack, price, description, producer));
 
         return items.size();
     }
@@ -68,10 +66,8 @@ public class ItemService {
             pageable = PageRequest.of(page, size);
         }
 
-        Producer requiredProducer = producerRepository.findByName(producer).orElse(null);
-
         Page<Item> items = itemRepository.findAll(ItemSpecification
-                .getItemSpecification(code, itemSize, pack, price, description, requiredProducer), pageable);
+                .getItemSpecification(code, itemSize, pack, price, description, producer), pageable);
 
         return items.stream().map(
                 item -> new ItemResponse(

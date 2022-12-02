@@ -11,6 +11,7 @@ import com.sonet.storage.model.moving.MovingType;
 import com.sonet.storage.model.record.Record;
 import com.sonet.storage.model.sell.Sell;
 import com.sonet.storage.repository.*;
+import com.sonet.storage.specification.SellSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -46,8 +47,8 @@ public class SellService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<SellResponse> getAllSells() {
-        return sellRepository.findByOrderByIdAsc().stream().map(
+    public List<SellResponse> getAllSellsSize(String id, String date, String user) {
+        return sellRepository.findAll(SellSpecification.getSellSpecification(id, date, user)).stream().map(
                 sell -> new SellResponse(
                         sell.getId(),
                         sell.getDate(),
@@ -65,7 +66,8 @@ public class SellService {
         ).collect(Collectors.toList());
     }
 
-    public List<SellResponse> getSellsPage(int page, int size, String sort, String way) {
+    public List<SellResponse> getSellsPage(int page, int size, String sort, String way, String id, String date,
+                                           String user) {
         Pageable pageable;
         if ("asc".equals(way)) {
             pageable = PageRequest.of(page, size, Sort.by(sort));
@@ -75,7 +77,7 @@ public class SellService {
             pageable = PageRequest.of(page, size);
         }
 
-        return sellRepository.findAll(pageable).stream().map(
+        return sellRepository.findAll(SellSpecification.getSellSpecification(id, date, user), pageable).stream().map(
                 sell -> new SellResponse(
                         sell.getId(),
                         sell.getDate(),

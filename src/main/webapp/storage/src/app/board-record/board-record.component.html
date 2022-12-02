@@ -1,4 +1,12 @@
 <app-header></app-header>
+<input type="text" [(ngModel)]="id" (focusout)="onFilter()" id="id">
+<input type="text" [(ngModel)]="code" (focusout)="onFilter()" id="code">
+<input type="text" [(ngModel)]="itemSize" (focusout)="onFilter()" id="itemSize">
+<input type="text" [(ngModel)]="pack" (focusout)="onFilter()" id="pack">
+<input type="text" [(ngModel)]="price" (focusout)="onFilter()" id="price">
+<input type="text" [(ngModel)]="description" (focusout)="onFilter()" id="description">
+<input type="text" [(ngModel)]="producer" (focusout)="onFilter()" id="producer">
+<input type="text" [(ngModel)]="count" (focusout)="onFilter()" id="count">
 <table class="table table-bordered" matSort (matSortChange)="sortData($event)">
   <thead class="table-success">
   <tr>

@@ -26,19 +26,25 @@ export class BoardSellComponent implements OnInit {
 
   currentWay: string = '';
 
+  id: string = '';
+
+  date: string = '';
+
+  user: string = '';
+
   constructor(
     private matDialog: MatDialog,
     private sellService: SellService
   ) { }
 
   ngOnInit(): void {
-    this.sellService.getSellsPage(0, 13, 'id', 'asc').subscribe(
+    this.sellService.getSellsPage(0, 13, 'id', 'asc', this.id, this.date, this.user).subscribe(
       data => {
         this.sells = data;
       }
     );
 
-    this.sellService.getSellsSize().subscribe(
+    this.sellService.getSellsSize(this.id, this.date, this.user).subscribe(
       data => {
         this.totalElements = data;
       }
@@ -67,7 +73,7 @@ export class BoardSellComponent implements OnInit {
   nextPage(event: PageEvent) {
     this.currentPage = event.pageIndex;
     this.currentSize = event.pageSize;
-    this.sellService.getSellsPage(event.pageIndex, event.pageSize, this.currentSort, this.currentWay).subscribe(
+    this.sellService.getSellsPage(event.pageIndex, event.pageSize, this.currentSort, this.currentWay, this.id, this.date, this.user).subscribe(
       data => {
         this.sells = data;
       }
@@ -77,9 +83,23 @@ export class BoardSellComponent implements OnInit {
   sortData(sort: Sort) {
     this.currentSort = sort.active;
     this.currentWay = sort.direction;
-    this.sellService.getSellsPage(this.currentPage, this.currentSize, sort.active, sort.direction).subscribe(
+    this.sellService.getSellsPage(this.currentPage, this.currentSize, sort.active, sort.direction, this.id, this.date, this.user).subscribe(
       data => {
         this.sells = data;
+      }
+    );
+  }
+
+  onFilter() {
+    this.sellService.getSellsPage(this.currentPage, this.currentSize, this.currentSort, this.currentWay, this.id, this.date, this.user).subscribe(
+      data => {
+        this.sells = data;
+      }
+    );
+
+    this.sellService.getSellsSize(this.id, this.date, this.user).subscribe(
+      data => {
+        this.totalElements = data;
       }
     );
   }

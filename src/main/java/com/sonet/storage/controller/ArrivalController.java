@@ -19,25 +19,24 @@ public class ArrivalController {
     @Autowired
     private ArrivalService arrivalService;
 
-    @GetMapping
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public List<ArrivalResponse> getAllArrivals() {
-        return arrivalService.getAllArrivals();
-    }
-
     @GetMapping("page")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public List<ArrivalResponse> getArrivalsPage(@RequestParam(name = "page") int page,
                                                  @RequestParam(name = "size") int size,
                                                  @RequestParam(name = "sort") String sort,
-                                                 @RequestParam(name = "way") String way) {
-        return arrivalService.getArrivalsPage(page, size, sort, way);
+                                                 @RequestParam(name = "way") String way,
+                                                 @RequestParam(name = "id") String id,
+                                                 @RequestParam(name = "date") String date,
+                                                 @RequestParam(name = "user") String user) {
+        return arrivalService.getArrivalsPage(page, size, sort, way, id, date, user);
     }
 
     @GetMapping("size")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public Integer getArrivalsNumber() {
-        return arrivalService.getAllArrivals().size();
+    public Integer getArrivalsNumber(@RequestParam(name = "id") String id,
+                                     @RequestParam(name = "date") String date,
+                                     @RequestParam(name = "user") String user) {
+        return arrivalService.getAllArrivalsSize(id, date, user).size();
     }
 
     @PostMapping("new")

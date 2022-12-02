@@ -4,6 +4,7 @@ import com.sonet.storage.model.item.Item;
 import com.sonet.storage.model.producer.Producer;
 import org.springframework.data.jpa.domain.Specification;
 
+import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
 public class ItemSpecification {
 
     public static Specification<Item> getItemSpecification(String code, String itemSize, String pack, String price,
-                                                           String description, Producer producer) {
+                                                           String description, String producer) {
         return ((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
@@ -40,8 +41,9 @@ public class ItemSpecification {
                 predicates.add(predicate);
             }
 
-            if (producer != null) {
-                Predicate predicate = criteriaBuilder.equal(root.<Producer>get("producer"), producer);
+            if (producer != null && !producer.isEmpty()) {
+                Path<Producer> path = root.get("producer");
+                Predicate predicate = criteriaBuilder.equal(path.<String>get("name"), producer);
                 predicates.add(predicate);
             }
 
