@@ -6,6 +6,7 @@ import com.sonet.storage.dto.response.MessageResponse;
 import com.sonet.storage.dto.response.ProducerResponse;
 import com.sonet.storage.model.producer.Producer;
 import com.sonet.storage.repository.ProducerRepository;
+import com.sonet.storage.specification.ProducerSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,7 +36,15 @@ public class ProducerService {
         )).collect(Collectors.toList());
     }
 
-    public List<ProducerResponse> getProducersPage(int page, int size, String sort, String way) {
+    public Integer getAllProducersSize (String id, String name, String country, String description) {
+        List<Producer> producers = producerRepository
+                .findAll(ProducerSpecification.getProducerSpecification(id, name, country, description));
+
+        return producers.size();
+    }
+
+    public List<ProducerResponse> getProducersPage(int page, int size, String sort, String way, String id, String name,
+                                                   String country, String description) {
         Pageable pageable;
         if ("asc".equals(way)) {
             pageable = PageRequest.of(page, size, Sort.by(sort));
@@ -45,7 +54,8 @@ public class ProducerService {
             pageable = PageRequest.of(page, size);
         }
 
-        Page<Producer> producers = producerRepository.findAll(pageable);
+        Page<Producer> producers = producerRepository
+                .findAll(ProducerSpecification.getProducerSpecification(id, name, country, description), pageable);
 
         return producers.stream().map(
                 producer -> new ProducerResponse(

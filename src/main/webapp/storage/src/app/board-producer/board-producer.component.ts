@@ -28,6 +28,14 @@ export class BoardProducerComponent implements OnInit {
 
   currentWay: string = '';
 
+  id: string = '';
+
+  name: string = '';
+
+  country: string = '';
+
+  description: string = '';
+
   constructor(
     private matDialog: MatDialog,
     private producerService: ProducerService,
@@ -35,13 +43,14 @@ export class BoardProducerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-      this.producerService.getProducersPage(0,9, 'id', 'asc').subscribe(
+      this.producerService.getProducersPage(0,9, 'id', 'asc', this.id, this.name,
+        this.country, this.description).subscribe(
         data => {
           this.producers = data;
         }
       );
 
-    this.producerService.getProducersSize().subscribe(
+    this.producerService.getProducersSize(this.id, this.name, this.country, this.description).subscribe(
       data => {
         this.totalElements = data;
       }
@@ -89,7 +98,8 @@ export class BoardProducerComponent implements OnInit {
   nextPage(event: PageEvent) {
     this.currentPage = event.pageIndex;
     this.currentSize = event.pageSize;
-    this.producerService.getProducersPage(event.pageIndex, event.pageSize, this.currentSort, this.currentWay).subscribe(
+    this.producerService.getProducersPage(event.pageIndex, event.pageSize, this.currentSort, this.currentWay, this.id,
+      this.name, this.country, this.description).subscribe(
       data => {
         this.producers = data;
       }
@@ -99,9 +109,25 @@ export class BoardProducerComponent implements OnInit {
   sortData(sort: Sort) {
     this.currentSort = sort.active;
     this.currentWay = sort.direction;
-    this.producerService.getProducersPage(this.currentPage, this.currentSize, sort.active, sort.direction).subscribe(
+    this.producerService.getProducersPage(this.currentPage, this.currentSize, sort.active, sort.direction, this.id,
+      this.name, this.country, this.description).subscribe(
       data => {
         this.producers = data;
+      }
+    );
+  }
+
+  onFilter() {
+    this.producerService.getProducersPage(this.currentPage, this.currentSize, this.currentSort, this.currentWay,
+      this.id, this.name, this.country, this.description).subscribe(
+      data => {
+        this.producers = data;
+      }
+    );
+
+    this.producerService.getProducersSize(this.id, this.name, this.country, this.description).subscribe(
+      data => {
+        this.totalElements = data;
       }
     );
   }

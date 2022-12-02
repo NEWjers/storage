@@ -19,13 +19,33 @@ export class ItemService {
     return this.http.get<Item[]>(API_URL);
   }
 
-  getItemsPage(pageNumber: number, pageSize: number, sort: string, way: string) {
-    const params = {page: pageNumber, size: pageSize, sort: sort, way: way};
+  getItemsPage(pageNumber: number, pageSize: number, sort: string, way: string, code: string, itemSize: string,
+               pack: string, price: string, description: string, producer: string) {
+    const params = {
+      page: pageNumber,
+      size: pageSize,
+      sort: sort,
+      way: way,
+      code: code,
+      itemSize: itemSize,
+      pack: pack,
+      price: price,
+      description: description,
+      producer: producer
+    };
     return this.http.get<Item[]>(API_URL + '/page', {params});
   }
 
-  getItemsSize() {
-    return this.http.get<number>(API_URL + '/size');
+  getItemsSize(code: string, itemSize: string, pack: string, price: string, description: string, producer: string) {
+    const params = {
+      code: code,
+      itemSize: itemSize,
+      pack: pack,
+      price: price,
+      description: description,
+      producer: producer
+    };
+    return this.http.get<number>(API_URL + '/size', {params});
   }
 
   createItem(code: string, size: string, pack: number, price: number, description: string, producerId: number) {

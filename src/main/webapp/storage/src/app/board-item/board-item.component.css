@@ -3,7 +3,6 @@ table {
   position: relative;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 50px;
   font-size: larger;
 }
 
@@ -35,4 +34,54 @@ button {
 
 .edit-delete {
   text-align: end;
+}
+
+#code {
+  width: 119px;
+  margin-left: 183px;
+  margin-top: 40px;
+  background-color: whitesmoke;
+  border-color: gray;
+}
+
+
+#itemSize {
+  width: 110px;
+  margin-left: 3px;
+  margin-top: 40px;
+  background-color: whitesmoke;
+  border-color: gray;
+}
+
+
+#pack {
+  width: 117px;
+  margin-left: 3px;
+  margin-top: 40px;
+  background-color: whitesmoke;
+  border-color: gray;
+}
+
+#price {
+  width: 121px;
+  margin-left: 3px;
+  margin-top: 40px;
+  background-color: whitesmoke;
+  border-color: gray;
+}
+
+#description {
+  width: 197px;
+  margin-left: 3px;
+  margin-top: 40px;
+  background-color: whitesmoke;
+  border-color: gray;
+}
+
+#producer {
+  width: 167px;
+  margin-left: 3px;
+  margin-top: 40px;
+  background-color: whitesmoke;
+  border-color: gray;
 }

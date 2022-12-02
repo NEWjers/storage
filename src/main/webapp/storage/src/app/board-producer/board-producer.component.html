@@ -1,4 +1,8 @@
 <app-header></app-header>
+<input type="text" [(ngModel)]="id" (focusout)="onFilter()" id="id">
+<input type="text" [(ngModel)]="name" (focusout)="onFilter()" id="name">
+<input type="text" [(ngModel)]="country" (focusout)="onFilter()" id="country">
+<input type="text" [(ngModel)]="description" (focusout)="onFilter()" id="description">
 <table class="table table-bordered" matSort (matSortChange)="sortData($event)">
     <thead class="table-success">
         <tr >

@@ -30,14 +30,25 @@ public class ItemController {
     public List<ItemResponse> getItemsPage(@RequestParam(name = "page") int page,
                                            @RequestParam(name = "size") int size,
                                            @RequestParam(name = "sort") String sort,
-                                           @RequestParam(name = "way") String way) {
-        return itemService.getItemsPage(page, size, sort, way);
+                                           @RequestParam(name = "way") String way,
+                                           @RequestParam(name = "code") String code,
+                                           @RequestParam(name = "itemSize") String itemSize,
+                                           @RequestParam(name = "pack") String pack,
+                                           @RequestParam(name = "price") String price,
+                                           @RequestParam(name = "description") String description,
+                                           @RequestParam(name = "producer") String producer) {
+        return itemService.getItemsPage(page, size, sort, way, code, itemSize, pack, price, description, producer);
     }
 
     @GetMapping("size")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public Integer getItemsNumber() {
-        return itemService.getAllItems().size();
+    public Integer getItemsNumber(@RequestParam(name = "code") String code,
+                                  @RequestParam(name = "itemSize") String itemSize,
+                                  @RequestParam(name = "pack") String pack,
+                                  @RequestParam(name = "price") String price,
+                                  @RequestParam(name = "description") String description,
+                                  @RequestParam(name = "producer") String producer) {
+        return itemService.getAllItemsSize(code, itemSize, pack, price, description, producer);
     }
 
     @PostMapping("new")

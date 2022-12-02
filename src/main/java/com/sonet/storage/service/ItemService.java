@@ -8,6 +8,7 @@ import com.sonet.storage.model.item.Item;
 import com.sonet.storage.model.producer.Producer;
 import com.sonet.storage.repository.ItemRepository;
 import com.sonet.storage.repository.ProducerRepository;
+import com.sonet.storage.specification.ItemSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -45,7 +46,19 @@ public class ItemService {
         ).collect(Collectors.toList());
     }
 
-    public List<ItemResponse> getItemsPage(int page, int size, String sort, String way) {
+    public Integer getAllItemsSize(String code, String itemSize, String pack, String price,
+                                   String description, String producer) {
+
+        Producer requiredProducer = producerRepository.findByName(producer).orElse(null);
+
+        List<Item> items = itemRepository.findAll(ItemSpecification
+                .getItemSpecification(code, itemSize, pack, price, description, requiredProducer));
+
+        return items.size();
+    }
+
+    public List<ItemResponse> getItemsPage(int page, int size, String sort, String way, String code, String itemSize,
+                                           String pack, String price, String description, String producer) {
         Pageable pageable;
         if ("asc".equals(way)) {
             pageable = PageRequest.of(page, size, Sort.by(sort));
@@ -55,7 +68,10 @@ public class ItemService {
             pageable = PageRequest.of(page, size);
         }
 
-        Page<Item> items = itemRepository.findAll(pageable);
+        Producer requiredProducer = producerRepository.findByName(producer).orElse(null);
+
+        Page<Item> items = itemRepository.findAll(ItemSpecification
+                .getItemSpecification(code, itemSize, pack, price, description, requiredProducer), pageable);
 
         return items.stream().map(
                 item -> new ItemResponse(

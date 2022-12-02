@@ -29,6 +29,18 @@ export class BoardItemComponent implements OnInit {
 
   currentWay: string = '';
 
+  code: string = '';
+
+  itemSize: string = '';
+
+  pack: string = '';
+
+  price: string = '';
+
+  description: string = '';
+
+  producer: string = '';
+
   constructor(
     private matDialog: MatDialog,
     private itemService: ItemService,
@@ -37,13 +49,13 @@ export class BoardItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.itemService.getItemsPage(0,9, 'code', 'asc').subscribe(
+    this.itemService.getItemsPage(0,9, 'code', 'asc', this.code, this.itemSize, this.pack, this.price, this.description, this.producer).subscribe(
       data => {
         this.items = data;
       }
     );
 
-    this.itemService.getItemsSize().subscribe(
+    this.itemService.getItemsSize(this.code, this.itemSize, this.pack, this.price, this.description, this.producer).subscribe(
       data => {
         this.totalElements = data;
       }
@@ -94,7 +106,7 @@ export class BoardItemComponent implements OnInit {
   nextPage(event: PageEvent) {
     this.currentPage = event.pageIndex;
     this.currentSize = event.pageSize;
-    this.itemService.getItemsPage(event.pageIndex, event.pageSize, this.currentSort, this.currentWay).subscribe(
+    this.itemService.getItemsPage(event.pageIndex, event.pageSize, this.currentSort, this.currentWay, this.code, this.itemSize, this.pack, this.price, this.description, this.producer).subscribe(
       data => {
         this.items = data;
       }
@@ -104,9 +116,23 @@ export class BoardItemComponent implements OnInit {
   sortData(sort: Sort) {
     this.currentSort = sort.active;
     this.currentWay = sort.direction;
-    this.itemService.getItemsPage(this.currentPage, this.currentSize, sort.active, sort.direction).subscribe(
+    this.itemService.getItemsPage(this.currentPage, this.currentSize, sort.active, sort.direction, this.code, this.itemSize, this.pack, this.price, this.description, this.producer).subscribe(
       data => {
         this.items = data;
+      }
+    );
+  }
+
+  onFilter() {
+    this.itemService.getItemsPage(this.currentPage, this.currentSize, this.currentSort, this.currentWay, this.code, this.itemSize, this.pack, this.price, this.description, this.producer).subscribe(
+      data => {
+        this.items = data;
+      }
+    );
+
+    this.itemService.getItemsSize(this.code, this.itemSize, this.pack, this.price, this.description, this.producer).subscribe(
+      data => {
+        this.totalElements = data;
       }
     );
   }
