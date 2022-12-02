@@ -30,14 +30,21 @@ public class ProducerController {
     public List<ProducerResponse> getProducersPage(@RequestParam(name = "page") int page,
                                                    @RequestParam(name = "size") int size,
                                                    @RequestParam(name = "sort") String sort,
-                                                   @RequestParam(name = "way") String way) {
-        return producerService.getProducersPage(page, size, sort, way);
+                                                   @RequestParam(name = "way") String way,
+                                                   @RequestParam(name = "id") String id,
+                                                   @RequestParam(name = "name") String name,
+                                                   @RequestParam(name = "country") String country,
+                                                   @RequestParam(name = "description") String description) {
+        return producerService.getProducersPage(page, size, sort, way, id, name, country, description);
     }
 
     @GetMapping("size")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public Integer getProducersNumber() {
-        return producerService.getAllProducers().size();
+    public Integer getProducersNumber(@RequestParam(name = "id") String id,
+                                      @RequestParam(name = "name") String name,
+                                      @RequestParam(name = "country") String country,
+                                      @RequestParam(name = "description") String description) {
+        return producerService.getAllProducersSize(id, name, country, description);
     }
 
     @PostMapping("new")

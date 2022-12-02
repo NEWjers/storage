@@ -12,17 +12,14 @@ export class ArrivalService {
 
   constructor(private http: HttpClient) { }
 
-  getAllArrivals() {
-    return this.http.get<Arrival[]>(API_URL);
-  }
-
-  getArrivalsPage(pageNumber: number, pageSize: number, sort: string, way: string) {
-    const params = {page: pageNumber, size: pageSize, sort: sort, way: way};
+  getArrivalsPage(pageNumber: number, pageSize: number, sort: string, way: string, id: string, date: string, user: string) {
+    const params = {page: pageNumber, size: pageSize, sort: sort, way: way, id: id, date: date, user: user};
     return this.http.get<Arrival[]>(API_URL + '/page', {params});
   }
 
-  getArrivalsSize() {
-    return this.http.get<number>(API_URL + '/size');
+  getArrivalsSize(id: string, date: string, user: string) {
+    const params = {id: id, date: date, user: user};
+    return this.http.get<number>(API_URL + '/size', {params});
   }
 
   createArrival(arrivalRequests: ArrivalRequest[]) {

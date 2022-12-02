@@ -3,7 +3,6 @@ table {
   position: relative;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 50px;
   font-size: larger;
 }
 
@@ -35,4 +34,29 @@ button {
 
 .edit-delete {
   text-align: end;
+}
+
+
+#id {
+  width: 288px;
+  margin-left: 183px;
+  margin-top: 40px;
+  background-color: whitesmoke;
+  border-color: gray;
+}
+
+#date {
+  width: 535px;
+  margin-left: 3px;
+  margin-top: 40px;
+  background-color: whitesmoke;
+  border-color: gray;
+}
+
+#user {
+  width: 244px;
+  margin-left: 3px;
+  margin-top: 40px;
+  background-color: whitesmoke;
+  border-color: gray;
 }

@@ -27,6 +27,12 @@ export class BoardAdminComponent implements OnInit {
 
   currentUser: any;
 
+  id: string = '';
+
+  username: string = '';
+
+  role: string = '';
+
   constructor(
     private userService: UserService,
     private matDialog: MatDialog,
@@ -35,13 +41,13 @@ export class BoardAdminComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.getUsersPage(0, 9, 'id', 'asc').subscribe(
+    this.userService.getUsersPage(0, 9, 'id', 'asc', this.id, this.username, this.role).subscribe(
       data => {
         this.users = data;
       }
     );
 
-    this.userService.getUsersSize().subscribe(
+    this.userService.getUsersSize(this.id, this.username, this.role).subscribe(
       data => {
         this.totalElements = data;
       }
@@ -88,7 +94,7 @@ export class BoardAdminComponent implements OnInit {
   nextPage(event: PageEvent) {
     this.currentPage = event.pageIndex;
     this.currentSize = event.pageSize;
-    this.userService.getUsersPage(event.pageIndex, event.pageSize, this.currentSort, this.currentWay).subscribe(
+    this.userService.getUsersPage(event.pageIndex, event.pageSize, this.currentSort, this.currentWay, this.id, this.username, this.role).subscribe(
       data => {
         this.users = data;
       }
@@ -98,9 +104,23 @@ export class BoardAdminComponent implements OnInit {
   sortData(sort: Sort) {
     this.currentSort = sort.active;
     this.currentWay = sort.direction;
-    return this.userService.getUsersPage(this.currentPage, this.currentSize, sort.active, sort.direction).subscribe(
+    return this.userService.getUsersPage(this.currentPage, this.currentSize, sort.active, sort.direction, this.id, this.username, this.role).subscribe(
       data => {
         this.users = data;
+      }
+    );
+  }
+
+  onFilter() {
+     this.userService.getUsersPage(this.currentPage, this.currentSize, this.currentSort, this.currentWay, this.id, this.username, this.role).subscribe(
+      data => {
+        this.users = data;
+      }
+    );
+
+    this.userService.getUsersSize(this.id, this.username, this.role).subscribe(
+      data => {
+        this.totalElements = data;
       }
     );
   }

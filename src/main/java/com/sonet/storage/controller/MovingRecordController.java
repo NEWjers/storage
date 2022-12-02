@@ -16,24 +16,39 @@ public class MovingRecordController {
     @Autowired
     private MovingRecordService movingRecordService;
 
-    @GetMapping
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public List<MovingRecordResponse> getAllMovingRecords() {
-        return movingRecordService.getAllMovingRecords();
-    }
-
     @GetMapping("page")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public List<MovingRecordResponse> getMovingRecordsPage(@RequestParam(name = "page") int page,
                                                            @RequestParam(name = "size") int size,
                                                            @RequestParam(name = "sort") String sort,
-                                                           @RequestParam(name = "way") String way){
-        return movingRecordService.getMovingRecordsPage(page, size, sort, way);
+                                                           @RequestParam(name = "way") String way,
+                                                           @RequestParam(name = "date") String date,
+                                                           @RequestParam(name = "user") String user,
+                                                           @RequestParam(name = "movingType") String movingType,
+                                                           @RequestParam(name = "code") String code,
+                                                           @RequestParam(name = "itemSize") String itemSize,
+                                                           @RequestParam(name = "pack") String pack,
+                                                           @RequestParam(name = "price") String price,
+                                                           @RequestParam(name = "description") String description,
+                                                           @RequestParam(name = "producer") String producer,
+                                                           @RequestParam(name = "count") String count){
+        return movingRecordService
+                .getMovingRecordsPage(page, size, sort, way, date, user, movingType, code, itemSize, pack, price, description, producer, count);
     }
 
     @GetMapping("size")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public Integer getMovingRecordsNumber() {
-        return movingRecordService.getAllMovingRecords().size();
+    public Integer getMovingRecordsNumber(@RequestParam(name = "date") String date,
+                                          @RequestParam(name = "user") String user,
+                                          @RequestParam(name = "movingType") String movingType,
+                                          @RequestParam(name = "code") String code,
+                                          @RequestParam(name = "itemSize") String itemSize,
+                                          @RequestParam(name = "pack") String pack,
+                                          @RequestParam(name = "price") String price,
+                                          @RequestParam(name = "description") String description,
+                                          @RequestParam(name = "producer") String producer,
+                                          @RequestParam(name = "count") String count) {
+        return movingRecordService
+                .getAllMovingRecordsSize(date, user, movingType, code, itemSize, pack, price, description, producer, count).size();
     }
 }

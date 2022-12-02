@@ -24,19 +24,37 @@ export class BoardRecordComponent implements OnInit {
 
   currentWay: string = '';
 
+  id: string = '';
+
+  code: string = '';
+
+  itemSize: string = '';
+
+  pack: string = '';
+
+  price: string = '';
+
+  description: string = '';
+
+  producer: string = '';
+
+  count: string = '';
+
   constructor(
     private matDialog: MatDialog,
     private recordService: RecordService
   ) { }
 
   ngOnInit(): void {
-    this.recordService.getRecordsPage(0, 13, 'id', 'asc').subscribe(
+    this.recordService.getRecordsPage(0, 13, 'id', 'asc', this.id, this.code,
+      this.itemSize, this.pack, this.price, this.description, this.producer, this.count).subscribe(
       data => {
         this.records = data;
       }
     );
 
-    this.recordService.getRecordsSize().subscribe(
+    this.recordService.getRecordsSize(this.id, this.code, this.itemSize, this.pack, this.price, this.description,
+      this.producer, this.count).subscribe(
       data => {
         this.totalElements = data;
       }
@@ -46,7 +64,8 @@ export class BoardRecordComponent implements OnInit {
   nextPage(event: PageEvent) {
     this.currentPage = event.pageIndex;
     this.currentSize = event.pageSize;
-    this.recordService.getRecordsPage(event.pageIndex, event.pageSize, this.currentSort, this.currentWay).subscribe(
+    this.recordService.getRecordsPage(event.pageIndex, event.pageSize, this.currentSort, this.currentWay, this.id,
+      this.code, this.itemSize, this.pack, this.price, this.description, this.producer, this.count).subscribe(
       data => {
         this.records = data;
       }
@@ -56,9 +75,26 @@ export class BoardRecordComponent implements OnInit {
   sortData(sort: Sort) {
     this.currentSort = sort.active;
     this.currentWay = sort.direction;
-    this.recordService.getRecordsPage(this.currentPage, this.currentSize, sort.active, sort.direction).subscribe(
+    this.recordService.getRecordsPage(this.currentPage, this.currentSize, sort.active, sort.direction,
+      this.id, this.code, this.itemSize, this.pack, this.price, this.description, this.producer, this.count).subscribe(
       data => {
         this.records = data;
+      }
+    );
+  }
+
+  onFilter() {
+    this.recordService.getRecordsPage(this.currentPage, this.currentSize, this.currentSort, this.currentWay,
+      this.id, this.code, this.itemSize, this.pack, this.price, this.description, this.producer, this.count).subscribe(
+      data => {
+        this.records = data;
+      }
+    );
+
+    this.recordService.getRecordsSize(this.id, this.code, this.itemSize, this.pack, this.price, this.description,
+      this.producer, this.count).subscribe(
+      data => {
+        this.totalElements = data;
       }
     );
   }

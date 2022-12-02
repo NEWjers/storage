@@ -3,7 +3,6 @@ table {
   position: relative;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 50px;
   font-size: larger;
 }
 
@@ -35,4 +34,85 @@ button {
 
 .edit-delete {
   text-align: end;
+}
+
+
+#date {
+  width: 160px;
+  margin-left: 183px;
+  margin-top: 40px;
+  background-color: whitesmoke;
+  border-color: gray;
+}
+
+#user {
+  width: 80px;
+  margin-left: 3px;
+  margin-top: 40px;
+  background-color: whitesmoke;
+  border-color: gray;
+}
+
+#movingType {
+  width: 139px;
+  margin-left: 3px;
+  margin-top: 40px;
+  background-color: whitesmoke;
+  border-color: gray;
+}
+
+#code {
+  width: 82px;
+  margin-left: 3px;
+  margin-top: 40px;
+  background-color: whitesmoke;
+  border-color: gray;
+}
+
+#itemSize {
+  width: 76px;
+  margin-left: 3px;
+  margin-top: 40px;
+  background-color: whitesmoke;
+  border-color: gray;
+}
+
+#pack {
+  width: 80px;
+  margin-left: 3px;
+  margin-top: 40px;
+  background-color: whitesmoke;
+  border-color: gray;
+}
+
+#price {
+  width: 87px;
+  margin-left: 3px;
+  margin-top: 40px;
+  background-color: whitesmoke;
+  border-color: gray;
+}
+
+#description {
+  width: 135px;
+  margin-left: 3px;
+  margin-top: 40px;
+  background-color: whitesmoke;
+  border-color: gray;
+}
+
+#producer {
+  width: 117px;
+  margin-left: 3px;
+  margin-top: 40px;
+  background-color: whitesmoke;
+  border-color: gray;
+}
+
+#count {
+  width: 90px;
+  margin-left: 3px;
+  margin-top: 40px;
+  background-color: whitesmoke;
+  border-color: gray;
 }

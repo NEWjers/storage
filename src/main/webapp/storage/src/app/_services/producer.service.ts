@@ -20,13 +20,24 @@ export class ProducerService {
     return this.http.get<Producer[]>(API_URL);
   }
 
-  getProducersPage(pageNumber: number, pageSize: number, sort: string, way: string) {
-    const params = {page: pageNumber, size: pageSize, sort: sort, way: way};
+  getProducersPage(pageNumber: number, pageSize: number, sort: string, way: string, id: string, name: string,
+                   country: string, description: string) {
+    const params = {
+      page: pageNumber,
+      size: pageSize,
+      sort: sort,
+      way: way,
+      id: id,
+      name: name,
+      country: country,
+      description: description
+    };
     return this.http.get<Producer[]>(API_URL + '/page', {params});
   }
 
-  getProducersSize() {
-    return this.http.get<number>(API_URL + '/size');
+  getProducersSize(id: string, name: string, country: string, description: string) {
+    const params = {id: id, name: name, country: country, description: description};
+    return this.http.get<number>(API_URL + '/size', {params});
   }
 
   createProducer(name: string, country: string, description: string) {

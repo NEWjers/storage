@@ -12,17 +12,14 @@ export class SellService {
 
   constructor(private http: HttpClient) { }
 
-  getSells() {
-    return this.http.get<Sell[]>(API_URL);
-  }
-
-  getSellsPage(pageNumber: number, pageSize: number, sort: string, way: string) {
-    const params = {page: pageNumber, size: pageSize, sort: sort, way: way};
+  getSellsPage(pageNumber: number, pageSize: number, sort: string, way: string, id: string, date: string, user: string) {
+    const params = {page: pageNumber, size: pageSize, sort: sort, way: way, id: id, date: date, user: user};
     return this.http.get<Sell[]>(API_URL + '/page', {params});
   }
 
-  getSellsSize() {
-    return this.http.get<number>(API_URL + '/size');
+  getSellsSize(id: string, date: string, user: string) {
+    const params = {id: id, date: date, user: user};
+    return this.http.get<number>(API_URL + '/size', {params});
   }
 
   createSell(sellRequests: SellRequest[]) {

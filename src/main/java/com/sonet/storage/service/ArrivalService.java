@@ -11,8 +11,8 @@ import com.sonet.storage.model.moving.MovingRecord;
 import com.sonet.storage.model.moving.MovingType;
 import com.sonet.storage.model.record.Record;
 import com.sonet.storage.repository.*;
+import com.sonet.storage.specification.ArrivalSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -47,9 +47,9 @@ public class ArrivalService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<ArrivalResponse> getAllArrivals() {
+    public List<ArrivalResponse> getAllArrivalsSize(String id, String date, String user) {
 
-        return arrivalRepository.findByOrderByIdAsc().stream().map(
+        return arrivalRepository.findAll(ArrivalSpecification.getArrivalSpecification(id, date, user)).stream().map(
                 arrival -> new ArrivalResponse(
                         arrival.getId(),
                         arrival.getDate(),
@@ -67,7 +67,8 @@ public class ArrivalService {
         ).collect(Collectors.toList());
     }
 
-    public List<ArrivalResponse> getArrivalsPage(int page, int size, String sort, String way) {
+    public List<ArrivalResponse> getArrivalsPage(int page, int size, String sort, String way, String id, String date,
+                                                 String user) {
         Pageable pageable;
         if ("asc".equals(way)) {
             pageable = PageRequest.of(page, size, Sort.by(sort));
@@ -77,7 +78,8 @@ public class ArrivalService {
             pageable = PageRequest.of(page, size);
         }
 
-        return arrivalRepository.findAll(pageable).stream().map(
+        return arrivalRepository
+                .findAll(ArrivalSpecification.getArrivalSpecification(id, date, user), pageable).stream().map(
                 arrival -> new ArrivalResponse(
                         arrival.getId(),
                         arrival.getDate(),

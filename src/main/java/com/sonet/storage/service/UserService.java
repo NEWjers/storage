@@ -10,6 +10,7 @@ import com.sonet.storage.model.user.User;
 import com.sonet.storage.repository.MovingRecordRepository;
 import com.sonet.storage.repository.RoleRepository;
 import com.sonet.storage.repository.UserRepository;
+import com.sonet.storage.specification.UserSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +25,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.sonet.storage.model.user.ERole.ROLE_ADMIN;
+import static com.sonet.storage.model.user.ERole.ROLE_USER;
 
 @Service
 public class UserService {
@@ -40,8 +42,17 @@ public class UserService {
     @Autowired
     private MovingRecordRepository movingRecordRepository;
 
-    public List<UserResponse> getAllUsers() {
-        List<User> users = userRepository.findByOrderByIdAsc();
+    public List<UserResponse> getAllUsers(String id, String username,
+                                          String role) {
+        Role requiredRole = null;
+        if (ROLE_ADMIN.name().equals(role)) {
+            requiredRole = roleRepository.findByName(ROLE_ADMIN).orElse(null);
+        }
+        if (ROLE_USER.name().equals(role)) {
+            requiredRole = roleRepository.findByName(ROLE_USER).orElse(null);
+        }
+
+        List<User> users = userRepository.findAll(UserSpecification.getUserSpecification(id, username, requiredRole));
 
         return users.stream().map(
                 user -> new UserResponse(
@@ -53,7 +64,8 @@ public class UserService {
         );
     }
 
-    public List<UserResponse> getUsersPage(int page, int size, String sort, String way) {
+    public List<UserResponse> getUsersPage(int page, int size, String sort, String way, String id, String username,
+                                           String role) {
         Pageable pageable;
         if ("asc".equals(way)) {
             pageable = PageRequest.of(page, size, Sort.by(sort));
@@ -63,7 +75,14 @@ public class UserService {
             pageable = PageRequest.of(page, size);
         }
 
-        Page<User> users = userRepository.findAll(pageable);
+        Role requiredRole = null;
+        if (ROLE_ADMIN.name().equals(role)) {
+            requiredRole = roleRepository.findByName(ROLE_ADMIN).orElse(null);
+        }
+        if (ROLE_USER.name().equals(role)) {
+            requiredRole = roleRepository.findByName(ROLE_USER).orElse(null);
+        }
+        Page<User> users = userRepository.findAll(UserSpecification.getUserSpecification(id, username, requiredRole), pageable);
 
         return users.stream().map(
                 user -> new UserResponse(
