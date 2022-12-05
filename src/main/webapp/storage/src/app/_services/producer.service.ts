@@ -40,6 +40,18 @@ export class ProducerService {
     return this.http.get<number>(API_URL + '/size', {params});
   }
 
+  getProducerReport(sort: string, way: string, id: string, name: string, country: string, description: string) {
+    const params = {
+      sort: sort,
+      way: way,
+      id: id,
+      name: name,
+      country: country,
+      description: description
+    };
+    return this.http.get(API_URL + '/report', {params, responseType: 'blob' as 'json'});
+  }
+
   createProducer(name: string, country: string, description: string) {
     return this.http.post(API_URL + "/new", {
       name,

@@ -10,7 +10,10 @@
             <th scope="col" mat-sort-header="name">Name</th>
             <th scope="col" mat-sort-header="country">Country</th>
             <th scope="col" mat-sort-header="description">Description</th>
-            <th scope="col" *ngIf="isAdmin" class="add"><button type="button" class="btn" id="add" (click)="addProducerDialog('0ms', '0ms')">+</button></th>
+            <th scope="col" *ngIf="isAdmin" class="add">
+              <button type="button" class="btn" id="add" (click)="addProducerDialog('0ms', '0ms')">+</button>
+              <button type="button" class="btn" id="report" (click)="generateReport()">Report</button>
+            </th>
           </tr>
     </thead>
     <tbody>

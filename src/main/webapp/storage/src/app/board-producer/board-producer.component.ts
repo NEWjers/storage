@@ -132,4 +132,21 @@ export class BoardProducerComponent implements OnInit {
     );
   }
 
+  generateReport() {
+    this.producerService.getProducerReport(this.currentSort, this.currentWay, this.id, this.name, this.country, this.description).subscribe(
+      (response:any) => {
+        let fileName: string = 'producers.pdf';
+        let dataType = response.type;
+        let binaryData = [];
+        binaryData.push(response);
+        let downloadLink = document.createElement('a');
+        downloadLink.href = window.URL.createObjectURL(new Blob(binaryData, {type: dataType}));
+        if (fileName)
+          downloadLink.setAttribute('download', fileName);
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+      }
+    );
+  }
+
 }
