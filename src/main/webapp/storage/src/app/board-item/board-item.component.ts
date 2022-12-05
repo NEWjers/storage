@@ -137,4 +137,20 @@ export class BoardItemComponent implements OnInit {
     );
   }
 
+  generateReport() {
+    this.itemService.getItemsReport(this.currentSort, this.currentWay, this.code, this.itemSize, this.pack, this.price, this.description, this.producer).subscribe(
+      (response: any) => {
+        let fileName: string = 'items.pdf';
+        let dataType = response.type;
+        let binaryData = [];
+        binaryData.push(response);
+        let downloadLink = document.createElement('a');
+        downloadLink.href = window.URL.createObjectURL(new Blob(binaryData, {type: dataType}));
+        if (fileName)
+          downloadLink.setAttribute('download', fileName);
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+    });
+  }
+
 }

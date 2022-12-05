@@ -37,7 +37,6 @@ public class ProducerReportService {
                     .findAll(ProducerSpecification.getProducerSpecification(id, name, country, description));
         }
 
-        File file = ResourceUtils.getFile("producer.jrxml");
         JasperReport jasperReport = JasperCompileManager.compileReport("src/main/resources/reports/producer.jrxml");
 
         Map<String, Object> parameters = new HashMap<>();

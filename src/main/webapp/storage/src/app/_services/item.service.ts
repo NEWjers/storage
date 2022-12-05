@@ -48,6 +48,22 @@ export class ItemService {
     return this.http.get<number>(API_URL + '/size', {params});
   }
 
+  getItemsReport(sort: string, way: string, code: string, itemSize: string, pack: string, price: string,
+                 description: string, producer: string) {
+    const params = {
+      sort: sort,
+      way: way,
+      code: code,
+      itemSize: itemSize,
+      pack: pack,
+      price: price,
+      description: description,
+      producer: producer
+    }
+
+    return this.http.get(API_URL + '/report', {params, responseType: 'blob' as 'json'});
+  }
+
   createItem(code: string, size: string, pack: number, price: number, description: string, producerId: number) {
     return this.http.post(API_URL + "/new", {
       code,
