@@ -9,6 +9,7 @@
 <input type="text" [(ngModel)]="description" (focusout)="onFilter()" id="description">
 <input type="text" [(ngModel)]="producer" (focusout)="onFilter()" id="producer">
 <input type="text" [(ngModel)]="count" (focusout)="onFilter()" id="count">
+<button type="button" class="btn" id="report" (click)="generateReport()">Report</button>
 <table class="table table-bordered" matSort (matSortChange)="sortData($event)">
   <thead class="table-success">
   <tr >

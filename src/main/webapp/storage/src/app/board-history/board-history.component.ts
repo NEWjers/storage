@@ -93,4 +93,21 @@ export class BoardHistoryComponent implements OnInit {
     );
   }
 
+  generateReport() {
+    this.movingRecordService.getHistoryReport(this.currentSort, this.currentWay, this.date, this.user, this.movingType, this.code, this.itemSize, this.pack, this.price, this.description, this.producer, this.count).subscribe(
+      (response:any) => {
+        let fileName: string = 'history.pdf';
+        let dataType = response.type;
+        let binaryData = [];
+        binaryData.push(response);
+        let downloadLink = document.createElement('a');
+        downloadLink.href = window.URL.createObjectURL(new Blob(binaryData, {type: dataType}));
+        if (fileName)
+          downloadLink.setAttribute('download', fileName);
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+      }
+    );
+  }
+
 }
