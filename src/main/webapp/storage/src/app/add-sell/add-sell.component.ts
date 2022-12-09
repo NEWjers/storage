@@ -60,4 +60,20 @@ export class AddSellComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  generateReport() {
+    this.sellService.getSellNewReport(this.selectedItems).subscribe(
+      (response:any) => {
+        let fileName: string = 'sell.pdf';
+        let dataType = response.type;
+        let binaryData = [];
+        binaryData.push(response);
+        let downloadLink = document.createElement('a');
+        downloadLink.href = window.URL.createObjectURL(new Blob(binaryData, {type: dataType}));
+        if (fileName)
+          downloadLink.setAttribute('download', fileName);
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+    });
+  }
+
 }

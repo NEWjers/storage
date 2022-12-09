@@ -56,7 +56,7 @@ public class ArrivalController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
 
-        String filename = "producers.pdf";
+        String filename = "arrival.pdf";
         headers.setContentDispositionFormData("filename", filename);
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 
