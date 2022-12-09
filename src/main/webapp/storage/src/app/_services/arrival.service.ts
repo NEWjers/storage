@@ -30,6 +30,11 @@ export class ArrivalService {
     });
   }
 
+  getArrivalExistedReport(id: number) {
+    const params = {id: id};
+    return this.http.get(API_URL + '/report', {params, responseType: 'blob' as 'json'});
+  }
+
   createArrival(arrivalRequests: ArrivalRequest[]) {
     return this.http.request('POST', API_URL + "/new", {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),

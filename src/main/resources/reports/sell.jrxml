@@ -24,7 +24,7 @@
                     <textElement textAlignment="Right">
                         <font size="14" isBold="false"/>
                     </textElement>
-                    <text><![CDATA[Arrival]]></text>
+                    <text><![CDATA[Sell]]></text>
                 </staticText>
             </frame>
         </band>

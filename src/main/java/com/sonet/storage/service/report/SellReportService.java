@@ -6,8 +6,10 @@ import com.sonet.storage.model.item.Item;
 import com.sonet.storage.model.moving.EMovingType;
 import com.sonet.storage.model.moving.MovingRecord;
 import com.sonet.storage.model.moving.MovingType;
+import com.sonet.storage.model.sell.Sell;
 import com.sonet.storage.repository.ItemRepository;
 import com.sonet.storage.repository.MovingTypeRepository;
+import com.sonet.storage.repository.SellRepository;
 import com.sonet.storage.repository.UserRepository;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -33,6 +35,9 @@ public class SellReportService {
 
     @Autowired
     private MovingTypeRepository movingTypeRepository;
+
+    @Autowired
+    private SellRepository sellRepository;
 
     public byte[] generateNewSellReport(List<SellRequest> sells) throws JRException {
         List<MovingRecord> movingRecords = new ArrayList<>();
@@ -61,6 +66,24 @@ public class SellReportService {
         parameters.put("createdBy", "Storage app");
 
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(movingRecords);
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+
+        return JasperExportManager.exportReportToPdf(jasperPrint);
+    }
+
+    public byte[] generateExistedSellReport(Long sellId) throws JRException {
+        Sell sell = sellRepository.findById(sellId).orElse(null);
+
+        if (sell == null) {
+            return null;
+        }
+
+        JasperReport jasperReport = JasperCompileManager.compileReport("src/main/resources/reports/sell.jrxml");
+
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("createdBy", "Storage app");
+
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(sell.getItems());
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
 
         return JasperExportManager.exportReportToPdf(jasperPrint);

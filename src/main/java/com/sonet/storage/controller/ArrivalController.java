@@ -47,6 +47,21 @@ public class ArrivalController {
         return arrivalService.getAllArrivalsSize(id, date, user).size();
     }
 
+    @GetMapping("report")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<byte[]> getArrivalExistedReport(@RequestParam(name = "id") Long id) throws JRException {
+        byte[] content = arrivalReportService.generateExistedArrivalReport(id);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+
+        String filename = "arrival.pdf";
+        headers.setContentDispositionFormData("filename", filename);
+        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+
+        return new ResponseEntity<>(content, headers, HttpStatus.OK);
+    }
+
     @PostMapping("report")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<byte[]> getArrivalNewReport(@RequestBody ArrivalRequest[] arrivalRequests) throws JRException {

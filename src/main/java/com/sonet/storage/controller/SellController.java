@@ -47,6 +47,21 @@ public class SellController {
         return sellService.getAllSellsSize(id, date, user).size();
     }
 
+    @GetMapping("report")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<byte[]> getSellExistedReport(@RequestParam(name = "id") Long id) throws JRException {
+        byte[] content = sellReportService.generateExistedSellReport(id);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+
+        String filename = "sell.pdf";
+        headers.setContentDispositionFormData("filename", filename);
+        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+
+        return new ResponseEntity<>(content, headers, HttpStatus.OK);
+    }
+
     @PostMapping("report")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<byte[]> getSellNewReport(@RequestBody SellRequest[] sellRequests) throws JRException {

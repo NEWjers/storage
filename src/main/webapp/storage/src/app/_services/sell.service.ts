@@ -30,6 +30,11 @@ export class SellService {
     });
   }
 
+  getSellExistedReport(id: number) {
+    const params = {id: id};
+    return this.http.get(API_URL + '/report', {params, responseType: 'blob' as 'json'});
+  }
+
   createSell(sellRequests: SellRequest[]) {
     return this.http.request('POST', API_URL + "/new", {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),

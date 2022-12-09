@@ -1,10 +1,12 @@
 package com.sonet.storage.service.report;
 
 import com.sonet.storage.dto.request.arrival.ArrivalRequest;
+import com.sonet.storage.model.arrival.Arrival;
 import com.sonet.storage.model.item.Item;
 import com.sonet.storage.model.moving.EMovingType;
 import com.sonet.storage.model.moving.MovingRecord;
 import com.sonet.storage.model.moving.MovingType;
+import com.sonet.storage.repository.ArrivalRepository;
 import com.sonet.storage.repository.ItemRepository;
 import com.sonet.storage.repository.MovingTypeRepository;
 import com.sonet.storage.repository.UserRepository;
@@ -32,6 +34,9 @@ public class ArrivalReportService {
 
     @Autowired
     private MovingTypeRepository movingTypeRepository;
+
+    @Autowired
+    private ArrivalRepository arrivalRepository;
 
     public byte[] generateNewArrivalReport(List<ArrivalRequest> arrivals) throws JRException {
 
@@ -63,6 +68,24 @@ public class ArrivalReportService {
         parameters.put("createdBy", "Storage app");
 
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(movingRecords);
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+
+        return JasperExportManager.exportReportToPdf(jasperPrint);
+    }
+
+    public byte[] generateExistedArrivalReport(Long arrivalId) throws JRException {
+        Arrival arrival = arrivalRepository.findById(arrivalId).orElse(null);
+
+        if (arrival == null) {
+            return null;
+        }
+
+        JasperReport jasperReport = JasperCompileManager.compileReport("src/main/resources/reports/arrival.jrxml");
+
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("createdBy", "Storage app");
+
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(arrival.getItems());
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
 
         return JasperExportManager.exportReportToPdf(jasperPrint);
