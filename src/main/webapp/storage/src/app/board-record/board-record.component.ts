@@ -99,4 +99,21 @@ export class BoardRecordComponent implements OnInit {
     );
   }
 
+  generateReport() {
+    this.recordService.getRecordsReport(this.currentSort, this.currentWay, this.id, this.code, this.itemSize, this.pack, this.price, this.description, this.producer, this.count).subscribe(
+      (response:any) => {
+        let fileName: string = 'records.pdf';
+        let dataType = response.type;
+        let binaryData = [];
+        binaryData.push(response);
+        let downloadLink = document.createElement('a');
+        downloadLink.href = window.URL.createObjectURL(new Blob(binaryData, {type: dataType}));
+        if (fileName)
+          downloadLink.setAttribute('download', fileName);
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+      }
+    );
+  }
+
 }

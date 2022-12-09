@@ -3,7 +3,12 @@ package com.sonet.storage.controller;
 import com.sonet.storage.dto.request.sell.SellRequest;
 import com.sonet.storage.dto.response.SellResponse;
 import com.sonet.storage.service.SellService;
+import com.sonet.storage.service.report.SellReportService;
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +23,9 @@ public class SellController {
 
     @Autowired
     private SellService sellService;
+
+    @Autowired
+    private SellReportService sellReportService;
 
     @GetMapping("page")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
@@ -37,6 +45,37 @@ public class SellController {
                                   @RequestParam(name = "date") String date,
                                   @RequestParam(name = "user") String user) {
         return sellService.getAllSellsSize(id, date, user).size();
+    }
+
+    @GetMapping("report")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<byte[]> getSellExistedReport(@RequestParam(name = "id") Long id) throws JRException {
+        byte[] content = sellReportService.generateExistedSellReport(id);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+
+        String filename = "sell.pdf";
+        headers.setContentDispositionFormData("filename", filename);
+        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+
+        return new ResponseEntity<>(content, headers, HttpStatus.OK);
+    }
+
+    @PostMapping("report")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<byte[]> getSellNewReport(@RequestBody SellRequest[] sellRequests) throws JRException {
+        List<SellRequest> sellRequestList = Arrays.asList(sellRequests);
+        byte[] content = sellReportService.generateNewSellReport(sellRequestList);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+
+        String filename = "sell.pdf";
+        headers.setContentDispositionFormData("filename", filename);
+        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+
+        return new ResponseEntity<>(content, headers, HttpStatus.OK);
     }
 
     @PostMapping("new")

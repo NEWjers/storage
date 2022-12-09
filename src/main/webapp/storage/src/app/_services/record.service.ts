@@ -45,4 +45,23 @@ export class RecordService {
     };
     return this.http.get<number>(API_URL + '/size', {params});
   }
+
+  getRecordsReport(sort: string, way: string, id:string, code: string, itemSize: string, pack: string, price: string,
+                   description: string, producer: string, count: string) {
+
+    const params = {
+      sort: sort,
+      way: way,
+      id: id,
+      code: code,
+      itemSize: itemSize,
+      pack: pack,
+      price: price,
+      description: description,
+      producer: producer,
+      count: count
+    };
+
+    return this.http.get(API_URL + '/report', {params, responseType: 'blob' as 'json'});
+  }
 }
