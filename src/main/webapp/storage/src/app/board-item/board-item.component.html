@@ -5,6 +5,7 @@
 <input type="text" [(ngModel)]="price" (focusout)="onFilter()" id="price">
 <input type="text" [(ngModel)]="description" (focusout)="onFilter()" id="description">
 <input type="text" [(ngModel)]="producer" (focusout)="onFilter()" id="producer">
+<button type="button" class="btn" id="report" (click)="generateReport()">Report</button>
 <table class="table table-bordered" matSort (matSortChange)="sortData($event)">
     <thead class="table-success">
         <tr >
@@ -16,7 +17,6 @@
             <th scope="col" mat-sort-header="producer.name">Producer</th>
             <th scope="col" *ngIf="isAdmin" class="add">
               <button type="button" class="btn" id="add" (click)="addItemDialog('0ms', '0ms')">+</button>
-              <button type="button" class="btn" id="report" (click)="generateReport()">Report</button>
             </th>
           </tr>
     </thead>

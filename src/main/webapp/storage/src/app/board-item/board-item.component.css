@@ -24,6 +24,10 @@ button {
   margin-right: 5px;
 }
 
+#report{
+  margin-left: 150px;
+}
+
 #add {
   background-color: #6CBB3C;
 }
